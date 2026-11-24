@@ -1,0 +1,10 @@
+.data
+.env
+gateway.config.json
+secrets.json
+config/
+t3-machines.json
+people.json
+docker-compose.yml
+test
+node_modules

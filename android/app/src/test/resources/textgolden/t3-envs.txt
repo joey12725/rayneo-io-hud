@@ -1,0 +1,7 @@
+Environments       7:45 PM
+>workstation        online
+ Windows . online         
+ server-01          online
+ laptop            offline
+                          
+B back                    

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hermes HUD</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+  <canvas id="screen" width="600" height="300" aria-label="Hermes response and avatar" role="img"></canvas>
+  <p id="accessible-response" class="sr-only" aria-live="polite"></p>
+  <nav aria-label="Response pages"><button id="previous" aria-label="Previous page">Previous</button><span id="pages" aria-live="polite">1 / 1</span><button id="next" aria-label="Next page">Next</button></nav>
+  <form id="message-form"><label for="message">Message Hermes</label><div class="message-row"><textarea id="message" rows="3" placeholder="Ask Hermes..." required></textarea><button type="submit" id="send">Send</button></div></form>
+  <div class="record-row"><button id="record" type="button" aria-pressed="false">Hold to talk</button><button id="new-conversation" type="button">New conversation</button><span id="connection" role="status">Loading animations...</span></div>
+  <p class="help">Hold Space or the talk button to record. Release to send. Arrow keys change response pages.</p>
+</main><script src="hud.js"></script><script>
+(async()=>{
+  const $=id=>document.getElementById(id),hud=await new HermesHUD($('screen')).load({packUrl:new URLSearchParams(location.search).get('avatar')||undefined}),now=()=>performance.now()/1000;
+  let sessionId=null,busy=false,recording=false,recorder=null,captureStream=null,pendingRelease=false,turnNumber=0,recognition=null,voiceSupported=false;
+  try{sessionId=localStorage.getItem('hermes-hud.session') || null;}catch{}
+  function rememberSession(value){sessionId=value;try{if(value)localStorage.setItem('hermes-hud.session',value);else localStorage.removeItem('hermes-hud.session');}catch{}}
+  const dispatch=event=>hud.dispatch({...event,time:now()});
+  const tell=message=>{$('connection').textContent=message;};
+  const refresh=()=>{const info=hud.render(hud.state,now());$('previous').disabled=info.page===0;$('next').disabled=info.page===info.pages-1;$('pages').textContent=(info.page+1)+' / '+info.pages;requestAnimationFrame(refresh);};
+  let streamedText='';
+  function eventSink(event,turnId){
+    if(event.type==='error')throw Error(event.message || event.error || 'Hermes connection failed.');
+    if(event.session_id)rememberSession(event.session_id);
+    if(event.type==='event'){if(event.status)dispatch({type:'status',status:event.status,turnId});return;}
+    if(event.type==='delta'){streamedText+=event.text||'';return;}
+    if(event.type==='result'){for(const e of event.events||[])eventSink(e,turnId);event={type:'response',text:event.text ?? streamedText};}
+    dispatch({...event,turnId});if(event.type==='response')$('accessible-response').textContent=event.text||event.output||'';
+  }
+  const base=(window.HUD_CONFIG?.apiBase || '/api').replace(/\/$/,'');
+  const defaultAdapter={
+    async request(path,body,turnId,onEvent,headers){
+      const response=await fetch(base+path,{method:'POST',body,headers});
+      if(!response.ok) {let detail;try{detail=await response.json();}catch{}throw Error(detail?.error||'Hermes request failed ('+response.status+').');}
+      if((response.headers.get('content-type')||'').includes('ndjson')) {
+        const reader=response.body.getReader(),decoder=new TextDecoder();let buffer='';
+        let completed=false;
+        const consume=line=>{if(line.trim()){const event=JSON.parse(line);if(event.type==='result')completed=true;onEvent(event);}};
+        while(true){const {done,value}=await reader.read();buffer+=decoder.decode(value||new Uint8Array(),{stream:!done});let nl;while((nl=buffer.indexOf('\n'))!==-1){consume(buffer.slice(0,nl));buffer=buffer.slice(nl+1);}if(done)break;}consume(buffer);if(!completed)throw Error('Hermes stream ended without a final response. Check this conversation before retrying.');return;
+      }
+      const result=await response.json();if(result.session_id)rememberSession(result.session_id);
+      for(const event of result.events||[])onEvent(event);
+      if(result.text!==undefined||result.output!==undefined)onEvent({type:'response',text:result.text ?? result.output});
+    },
+    sendText(message,{turnId,onEvent}){return this.request('/chat',JSON.stringify({message,session_id:sessionId}),turnId,onEvent,{'Content-Type':'application/json','Accept':'application/x-ndjson'});},
+    async sendAudio(audio,{turnId,onEvent}){const form=new FormData();form.append('audio',audio,'recording.'+(audio.type.includes('mp4')?'m4a':'webm'));const response=await fetch(base+'/audio',{method:'POST',body:form});const result=await response.json();if(!response.ok)throw Error(result.error||'Transcription unavailable.');const transcript=result.transcript ?? result.text;if(!transcript?.trim())throw Error('No speech detected.');return this.sendText(transcript,{turnId,onEvent});}
+  };
+  const adapter=window.HUD_ADAPTER || defaultAdapter;
+  async function send(kind,payload){
+    if(busy)return;streamedText='';busy=true;$('send').disabled=true;$('record').disabled=true;$('new-conversation').disabled=true;const turnId='hud-'+(++turnNumber);dispatch({type:'turn',turnId});tell('Hermes is working...');
+    try {await adapter[kind](payload,{turnId,onEvent:event=>eventSink(event,turnId)});if(hud.state.status==='speaking'){const cycle=hud.clipSeconds('speaking')*1000;setTimeout(()=>{if(hud.state.turnId===turnId&&hud.state.status==='speaking')dispatch({type:'done',turnId});},cycle);}else dispatch({type:'done',turnId});tell('Ready');}
+    catch(error){dispatch({type:'error',turnId,message:error.message});tell(error.message);}
+    finally {busy=false;$('send').disabled=false;$('record').disabled=!voiceSupported;$('new-conversation').disabled=false;}
+  }
+  $('new-conversation').onclick=()=>{if(busy||recording)return;rememberSession(null);hud.state=HermesHUD.initialState();$('accessible-response').textContent=hud.state.output;tell('New conversation ready');};
+  $('message-form').addEventListener('submit',event=>{event.preventDefault();const message=$('message').value.trim();if(message&&!busy){$('message').value='';send('sendText',message);}});
+  $('previous').onclick=()=>dispatch({type:'page',delta:-1});$('next').onclick=()=>dispatch({type:'page',delta:1});
+  const SpeechRecognition=window.SpeechRecognition || window.webkitSpeechRecognition;
+  let capabilities={};try{const r=await fetch(base+'/capabilities');if(r.ok)capabilities=await r.json();}catch{}
+  const serverVoice=!!(capabilities.transcription||capabilities.audio||capabilities.audio_transcription);
+  voiceSupported=!!SpeechRecognition || (serverVoice&&!!navigator.mediaDevices?.getUserMedia&&!!window.MediaRecorder);
+  $('record').disabled=!voiceSupported;if(!voiceSupported)$('record').title='Voice requires browser speech recognition or configured server transcription.';
+  async function startRecording(){
+    if(recording||busy||!voiceSupported)return;recording=true;pendingRelease=false;$('record').setAttribute('aria-pressed','true');dispatch({type:'listening'});tell('Listening...');
+    if(SpeechRecognition){
+      let transcript='',failed=false;recognition=new SpeechRecognition();recognition.continuous=true;recognition.interimResults=false;
+      recognition.onresult=event=>{for(let i=event.resultIndex;i<event.results.length;i++)if(event.results[i].isFinal)transcript+=event.results[i][0].transcript+' ';};
+      recognition.onerror=event=>{failed=true;tell('Voice capture: '+event.error);};
+      recognition.onend=()=>{recording=false;pendingRelease=false;recognition=null;$('record').setAttribute('aria-pressed','false');if(transcript.trim())send('sendText',transcript.trim());else {dispatch({type:'done'});if(!failed)tell('No speech detected.');}};
+      try{recognition.start();}catch(error){recording=false;recognition=null;$('record').setAttribute('aria-pressed','false');dispatch({type:'done'});tell(error.message);}return;
+    }
+    try {
+      if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder)throw Error('Voice capture requires HTTPS or localhost and browser microphone support.');
+      captureStream=await navigator.mediaDevices.getUserMedia({audio:true});
+      const mime=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(type=>MediaRecorder.isTypeSupported(type));
+      recorder=new MediaRecorder(captureStream,mime?{mimeType:mime}:undefined);const chunks=[];
+      recorder.ondataavailable=event=>{if(event.data.size)chunks.push(event.data);};
+      recorder.onstop=()=>{captureStream.getTracks().forEach(track=>track.stop());captureStream=null;const audio=new Blob(chunks,{type:recorder.mimeType});recorder=null;if(audio.size)send('sendAudio',audio);else {dispatch({type:'done'});tell('No audio captured.');}};
+      recorder.start();if(pendingRelease)stopRecording();
+    }catch(error){recording=false;$('record').setAttribute('aria-pressed','false');captureStream?.getTracks().forEach(track=>track.stop());dispatch({type:'done'});tell(error.message);}
+  }
+  function stopRecording(){if(!recording&&!pendingRelease)return;if(recognition){recording=false;$('record').setAttribute('aria-pressed','false');recognition.stop();return;}pendingRelease=true;if(!recorder)return;recording=false;pendingRelease=false;$('record').setAttribute('aria-pressed','false');if(recorder.state==='recording')recorder.stop();}
+  $('record').addEventListener('pointerdown',event=>{event.preventDefault();$('record').setPointerCapture(event.pointerId);startRecording();});
+  $('record').addEventListener('pointerup',stopRecording);$('record').addEventListener('pointercancel',stopRecording);
+  $('record').addEventListener('keydown',event=>{if((event.code==='Space'||event.code==='Enter')&&!event.repeat){event.preventDefault();startRecording();}});
+  $('record').addEventListener('keyup',event=>{if(event.code==='Space'||event.code==='Enter'){event.preventDefault();stopRecording();}});
+  document.addEventListener('keydown',event=>{if(/TEXTAREA|INPUT|BUTTON/.test(event.target.tagName))return;if(event.code==='Space'&&!event.repeat){event.preventDefault();startRecording();}else if(event.code==='ArrowRight'){event.preventDefault();dispatch({type:'page',delta:1});}else if(event.code==='ArrowLeft'){event.preventDefault();dispatch({type:'page',delta:-1});}});
+  document.addEventListener('keyup',event=>{if(event.code==='Space')stopRecording();});window.addEventListener('blur',stopRecording);
+  window.hermesHUD=hud;tell(voiceSupported?'Ready':'Ready - text input; voice unavailable in this browser.');refresh();
+})().catch(error=>{document.getElementById('connection').textContent='Could not load HUD: '+error.message;});
+</script></body></html>

@@ -1,0 +1,51 @@
+# Example deployment of the RayNeo iO HUD gateway. Copy it to docker-compose.yml, copy .env.example to .env and
+# gateway.config.starter.json to config/gateway.config.json, fill them in, then `docker compose up -d`.
+# Keep config/gateway.config.json small (only the keys you need): its keys override .env, except PORT, HOST,
+# GATEWAY_DATA and GATEWAY_WORKER below. gateway.config.example.json is a reference listing every key.
+# Put the gateway behind HTTPS (a reverse proxy or a tunnel) before the phone uses it over the internet.
+services:
+  gateway:
+    build: .
+    image: rayneo-io-hud-gateway:local
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      GATEWAY_DATA: /data
+      GATEWAY_CONFIG: /config/gateway.config.json
+      # One process runs the background workers (recording delivery, Beeper push, T3 notifications).
+      GATEWAY_WORKER: "1"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - gateway-data:/data
+      - ./config:/config:ro
+      # Optional drop-in files go in ./config next to gateway.config.json and are referenced with relative paths
+      # ("people": {"file": "./people.json"}, "t3": {"machinesFile": "./t3-machines.json"}). Other folders:
+      # - ./reports:/reports:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 256m
+    # If Hermes, Beeper Desktop or Home Assistant run as containers on the same host, join their network and use
+    # their service names in the config (for example HERMES_URL=http://hermes:8642).
+    # networks: [default, hermes]
+
+  # Optional: Tailscale sidecar for T3 Code machines that are reachable only on your tailnet
+  # (set T3_TAILNET_PROXY=socks5h://tailscale:1055 in .env).
+  # tailscale:
+  #   image: tailscale/tailscale:stable
+  #   environment:
+  #     TS_AUTHKEY: ${TS_AUTHKEY}
+  #     TS_USERSPACE: "true"
+  #     TS_SOCKS5_SERVER: ":1055"
+  #   volumes: [tailscale-state:/var/lib/tailscale]
+
+volumes:
+  gateway-data:
+  # tailscale-state:
+
+# networks:
+#   hermes:
+#     external: true

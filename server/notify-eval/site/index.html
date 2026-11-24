@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Notification Eval</title>
+<style>/*STYLE*/</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><h1>Notification Eval</h1><span id="built" class="muted"></span></div>
+  <nav class="tabs" role="tablist"><button type="button" id="tabCases" role="tab">Cases</button><button type="button" id="tabTuning" role="tab">Runs &amp; tuning log</button></nav>
+  <div class="controls">
+    <label>Run <select id="run"></select></label>
+    <label>Compare <select id="compare"><option value="">none</option></select></label>
+    <label id="thresholdBox" hidden>Popup at <input id="popupAt" type="range" min="0" max="1" step="0.05"> <output id="popupAtOut"></output></label>
+  </div>
+</header>
+<section id="tuningView" class="tuning" hidden></section>
+<main id="casesView">
+  <section id="runInfo" class="muted small"></section>
+  <section id="summary" class="summary"></section>
+  <section id="matrices" class="matrices"></section>
+  <section class="filters" id="filters">
+    <label>Kind <select data-f="kind"><option value="">all</option><option>beeper</option><option>t3</option><option>hermes</option><option>call</option></select></label>
+    <label>Split <select data-f="split"><option value="">any</option><option>dev</option><option>test</option></select></label>
+    <label>Expected <select data-f="expected"><option value="">any</option><option>suppress</option><option>stream</option><option>popup</option></select></label>
+    <label>Actual <select data-f="actual"><option value="">any</option><option>suppress</option><option>stream</option><option>popup</option><option>error</option></select></label>
+    <label>Ambiguous <select data-f="ambiguous"><option value="">any</option><option value="only">only</option><option value="exclude">exclude</option></select></label>
+    <label>Synthetic <select data-f="synthetic"><option value="">any</option><option value="only">only</option><option value="exclude">exclude</option></select></label>
+    <label>Label <select data-f="source"><option value="">any</option><option value="haiku-swarm-v3">Haiku votes v3</option><option value="owner-policy">Owner policy override</option><option value="owner">the owner</option><option value="llm">LLM</option><option value="heuristic">heuristic</option><option value="disagree">LLM vs heuristic disagree</option><option value="override">local override</option></select></label>
+    <label>Votes <select data-f="votes"><option value="">any</option><option value="unanimous">unanimous</option><option value="split">2 of 3</option><option value="v2changed">changed vs previous (v2) label</option><option value="policy">policy category matched</option><option value="v1changed">changed vs v1 label</option></select></label>
+    <label class="check"><input type="checkbox" data-f="mismatch"> mismatch</label>
+    <label class="check"><input type="checkbox" data-f="flaky"> flaky</label>
+    <label class="check"><input type="checkbox" data-f="changed"> changed vs compare</label>
+    <label class="grow">Search <input type="search" data-f="q" placeholder="text, sender, why, context, id"></label>
+    <button id="clearFilters" type="button">Clear filters</button>
+  </section>
+  <section class="corrections">
+    <span id="overrideCount"></span>
+    <button id="export" type="button">Export corrections</button>
+    <label class="button">Import corrections <input id="import" type="file" accept="application/json" hidden></label>
+    <button id="clearOverrides" type="button">Clear local overrides</button>
+  </section>
+  <div class="layout">
+    <section id="list" class="list" aria-label="Cases"></section>
+    <section id="detail" class="detail" aria-label="Case detail"><p class="muted">Select a case.</p></section>
+  </div>
+</main>
+<script id="eval-data" type="application/json">/*DATA*/</script>
+<script>
+/*DERIVE*/
+</script>
+<script>
+/*APP*/
+</script>
+</body>
+</html>

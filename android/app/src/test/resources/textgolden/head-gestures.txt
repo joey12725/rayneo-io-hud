@@ -1,0 +1,7 @@
+Head gestures      7:45 PM
+ Look up                On
+>Look-up angle      30 deg
+ Y adds 5 deg (10 to 70)  
+ Nod / shake           Off
+ Confirm with          Nod
+Y change B back           

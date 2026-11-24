@@ -1,0 +1,7 @@
+{
+  "$comment": "T3 Code servers the gateway can reach (t3.machinesFile / T3_MACHINES_FILE). `secret` names the secret holding that server's bearer token (read through the secrets provider, never stored here). Optional: `gatewayUrl` (a different URL for the gateway than for you), `gatewayProxy` (http://host:port or socks5h://host:port).",
+  "machines": [
+    { "id": "laptop", "alias": "laptop", "label": "Laptop", "url": "https://laptop.example-tailnet.ts.net", "secret": "T3_LAPTOP_TOKEN" },
+    { "id": "server", "alias": "server", "label": "Build server", "url": "https://t3.example.com", "secret": "T3_SERVER_TOKEN" }
+  ]
+}

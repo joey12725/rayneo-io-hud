@@ -1,0 +1,7 @@
+Clock settings     7:45 PM
+>Show phone clock     On  
+ Timers to phone     Off  
+ Alarms to phone     Off  
+ Timer rings for   1 min  
+ Alarm rings for   5 min v
+Y change B back           

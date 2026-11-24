@@ -1,0 +1,7 @@
+T3 question           Q1/1
+Which auth mode should the
+Beeper bridge use on      
+>Device token in Android  
+ Keystore (recommended)   
+ Session cookie copie... v
+<> text Y pick L say   1/2

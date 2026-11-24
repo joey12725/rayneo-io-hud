@@ -1,0 +1,307 @@
+{
+ "schema": 1,
+ "id": "default",
+ "name": "Placeholder orb",
+ "license": "CC0-1.0",
+ "author": "RayNeo iO HUD contributors",
+ "cell": {
+  "w": 192,
+  "h": 288
+ },
+ "atlas": {
+  "file": "atlas.png",
+  "cols": 8
+ },
+ "portraitCrop": [
+  16,
+  50,
+  160,
+  160
+ ],
+ "threshold": 100,
+ "states": {
+  "idle": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 0,
+     "ms": 350
+    },
+    {
+     "cell": 1,
+     "ms": 350
+    },
+    {
+     "cell": 2,
+     "ms": 450
+    }
+   ]
+  },
+  "sleeping": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 3,
+     "ms": 350
+    },
+    {
+     "cell": 4,
+     "ms": 350
+    },
+    {
+     "cell": 5,
+     "ms": 450
+    }
+   ]
+  },
+  "waking": {
+   "playback": "once",
+   "frames": [
+    {
+     "cell": 6,
+     "ms": 350
+    },
+    {
+     "cell": 7,
+     "ms": 350
+    },
+    {
+     "cell": 8,
+     "ms": 450
+    }
+   ]
+  },
+  "listening": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 9,
+     "ms": 350
+    },
+    {
+     "cell": 10,
+     "ms": 350
+    },
+    {
+     "cell": 11,
+     "ms": 450
+    }
+   ]
+  },
+  "thinking": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 12,
+     "ms": 350
+    },
+    {
+     "cell": 13,
+     "ms": 350
+    },
+    {
+     "cell": 14,
+     "ms": 450
+    }
+   ]
+  },
+  "speaking": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 15,
+     "ms": 350
+    },
+    {
+     "cell": 16,
+     "ms": 350
+    },
+    {
+     "cell": 17,
+     "ms": 450
+    }
+   ]
+  },
+  "working": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 18,
+     "ms": 350
+    },
+    {
+     "cell": 19,
+     "ms": 350
+    },
+    {
+     "cell": 20,
+     "ms": 450
+    }
+   ]
+  },
+  "searching": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 21,
+     "ms": 350
+    },
+    {
+     "cell": 22,
+     "ms": 350
+    },
+    {
+     "cell": 23,
+     "ms": 450
+    }
+   ]
+  },
+  "waiting": {
+   "playback": "loop",
+   "frames": [
+    {
+     "cell": 24,
+     "ms": 350
+    },
+    {
+     "cell": 25,
+     "ms": 350
+    },
+    {
+     "cell": 26,
+     "ms": 450
+    }
+   ]
+  },
+  "asking": {
+   "playback": "once_then_hold",
+   "frames": [
+    {
+     "cell": 27,
+     "ms": 350
+    },
+    {
+     "cell": 28,
+     "ms": 350
+    },
+    {
+     "cell": 29,
+     "ms": 450
+    }
+   ]
+  },
+  "error": {
+   "playback": "once",
+   "frames": [
+    {
+     "cell": 30,
+     "ms": 350
+    },
+    {
+     "cell": 31,
+     "ms": 350
+    },
+    {
+     "cell": 32,
+     "ms": 450
+    }
+   ]
+  },
+  "happy": {
+   "playback": "once",
+   "frames": [
+    {
+     "cell": 33,
+     "ms": 350
+    },
+    {
+     "cell": 34,
+     "ms": 350
+    },
+    {
+     "cell": 35,
+     "ms": 450
+    }
+   ]
+  },
+  "waving": {
+   "playback": "once",
+   "frames": [
+    {
+     "cell": 36,
+     "ms": 350
+    },
+    {
+     "cell": 37,
+     "ms": 350
+    },
+    {
+     "cell": 38,
+     "ms": 450
+    }
+   ]
+  },
+  "nodding": {
+   "playback": "once",
+   "frames": [
+    {
+     "cell": 39,
+     "ms": 350
+    },
+    {
+     "cell": 40,
+     "ms": 350
+    },
+    {
+     "cell": 41,
+     "ms": 450
+    }
+   ]
+  },
+  "celebrating": {
+   "playback": "once",
+   "frames": [
+    {
+     "cell": 42,
+     "ms": 350
+    },
+    {
+     "cell": 43,
+     "ms": 350
+    },
+    {
+     "cell": 44,
+     "ms": 450
+    }
+   ]
+  }
+ },
+ "fallbacks": {
+  "compressing": "working",
+  "delegating": "working",
+  "saving": "working",
+  "nerdy": "working",
+  "creative": "working",
+  "remembering": "thinking",
+  "curious": "thinking",
+  "confused": "thinking",
+  "skeptical": "thinking",
+  "philosophical": "thinking",
+  "interrupted": "listening",
+  "checking_watch": "waiting",
+  "looking_around": "idle",
+  "coffee": "idle",
+  "stretching": "idle",
+  "laughing": "happy",
+  "proud": "happy",
+  "winking": "happy",
+  "dancing": "celebrating",
+  "teaching": "speaking",
+  "debating": "speaking",
+  "sad": "error",
+  "concerned": "error",
+  "facepalm": "error",
+  "shaking_head": "error",
+  "surprised": "asking"
+ }
+}

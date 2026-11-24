@@ -1,0 +1,55 @@
+RayNeo interoperability transport for RayNeo iO HUD
+
+Portions adapted from OpenRayneo, Copyright 2026 Tobi1chi.
+Licensed under the Apache License, Version 2.0.
+Upstream: https://github.com/Tobi1chi/OpenRayneo
+Source reference: 7f2fc0d (main), as recorded in docs/rayneo-protocol.md.
+
+Adapted protocol framing/CRC, protobuf/TLV format, guest BLE authentication,
+RFCOMM service selection, caption display handshake/full-width alignment,
+Opus MediaCodec setup and TOC timing from:
+  android/.../ProtocolCodec.kt
+  android/.../RayneoConnection.kt
+  android/.../GlassesDisplay.kt
+  android/.../PromptAudio.kt
+  Sources/OpenRayneoBridge/main.swift
+  Sources/OpenRayneoBridge/DisplayController.swift
+
+The post-discovery/first-MTU callback gate is adapted from the Apache-2.0
+OpenRayneo fork by ruchirlives, reference 1943b92 (android-english-voice),
+android/.../BleIdentityGate.kt. Its repository inherits the upstream license.
+Upstream fork: https://github.com/ruchirlives/OpenRayneo
+
+Modified for RayNeo iO HUD: Kotlin transport lifecycle, bounded coroutine write queue,
+reconnect policy, minimal protobuf support, command/event APIs, setup UI,
+frame pacing, unsupported character handling, PCM downsampling and tests.
+Preserved source copyright/SPDX headers identify adapted Kotlin files.
+
+The full Apache-2.0 license is provided in LICENSE-OpenRayneo and in APK assets
+as openrayneo-license.txt; this notice is also in APK assets.
+No Turbo-IO implementation code or modified firmware is included.
+Android's platform MediaCodec supplies the Opus decoder; no Opus library is vendored.
+
+Raster interoperability additions (original RayNeo iO HUD Kotlin, no upstream code copied):
+  docs/raster-wire.md records the protocol descriptions used by these senders.
+  Turbo-IO reference 28a0fef0a42773f38222fcd0db2e0f2852ed4257 (2026-11-10):
+    docs/TVP2_TAR2.md
+    official-addon/tar2-display/README.md
+    official-addon/tar2-display/player.h, player.c, HDLink.m, FrameEncoder.m
+    official-addon/tar2-airplay/README.md (host binary business-15 integration contract)
+    firmware-research/strix-1.0.5.5-tvp2/src/video-player-v1/native.inc
+    official-addon/A2UIProtocol.m (widget command field/framing facts only)
+  Upstream: https://github.com/Turbo1123/Turbo-IO
+  Upstream original extensions are PolyForm Noncommercial 1.0.0; the separate
+  tar2-airplay receiver SDK is GPL-3.0. Neither implementation is incorporated.
+  The app needs no AirPlay receiver, modified official companion, or firmware binary.
+
+  Glassly CFW reference 451dd88064e6f7544c1d1adf0e5ccd7093be5576 (2026-11-04):
+    docs/PROTOCOL.md, docs/RAW-LINK-PLAN.md, docs/HOOKS.md
+    patches/link.c, ident.c, raster.c, disp.c, pixels.h (wire/geometry facts)
+  Upstream: https://github.com/tetramo-labs/glassly-rayneo-cfw
+  Glassly's original patches are MIT licensed; this app independently implements
+  the documented messages and does not incorporate its patch or rasterizer code.
+
+No rights to RayNeo's stock firmware or resource images are claimed. Stock appId,
+category, weather and A2UI tests select resources already resident on the device.

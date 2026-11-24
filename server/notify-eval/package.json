@@ -1,0 +1,16 @@
+{
+  "name": "notify-eval",
+  "private": true,
+  "type": "module",
+  "description": "Evaluation datasets, harness and static report site for the gateway's notification classifier. Node 24, no dependencies.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "run": "node run.mjs",
+    "build": "node build.mjs",
+    "build:sample": "node build.mjs --sample",
+    "test": "node --test test/"
+  }
+}

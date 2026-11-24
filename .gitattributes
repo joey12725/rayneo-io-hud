@@ -1,0 +1,13 @@
+* text=auto
+android/gradlew text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+*.png binary
+*.jar binary
+*.bin binary
+*.mp4 binary
+*.zip binary
+*.gif binary
+
+# Stock-display fixtures intentionally pad each row to its full grid width.
+android/app/src/test/resources/textgolden/*.txt whitespace=-blank-at-eol

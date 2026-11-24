@@ -1,0 +1,7 @@
+Edit alarm                
+7:00 AM                   
+Repeat Weekdays           
+Set: hour                 
+                          
+                          
+<> field ^v set Y save    

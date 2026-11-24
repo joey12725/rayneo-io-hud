@@ -1,0 +1,51 @@
+{
+  "_comment": "Fallback T3 Code vocabulary for dictation cleanup, used with (and when unavailable, instead of) the live server.getConfig lists. Extend it with t3.vocabFile (T3_VOCAB_FILE) rather than editing this file. Names may use letters, digits, space and . _ : / - only.",
+  "keywords": [
+    "ultrathink"
+  ],
+  "commands": [
+    "code-review",
+    "simplify",
+    "review",
+    "security-review",
+    "init",
+    "compact",
+    "clear",
+    "model",
+    "plan",
+    "resume",
+    "context",
+    "cost",
+    "memory",
+    "agents",
+    "mcp",
+    "config",
+    "glasses",
+    "loop",
+    "schedule"
+  ],
+  "skills": [
+    "glasses",
+    "code-review",
+    "simplify",
+    "review",
+    "security-review",
+    "pdf",
+    "docx",
+    "xlsx",
+    "pptx"
+  ],
+  "models": [
+    "Opus",
+    "Sonnet",
+    "Haiku",
+    "Sonnet 4",
+    "Opus 4",
+    "claude-opus-4",
+    "claude-sonnet-4",
+    "gpt-4o",
+    "gpt-4.1",
+    "o3",
+    "o4-mini"
+  ]
+}

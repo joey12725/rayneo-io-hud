@@ -1,0 +1,7 @@
+Deploy event-scraper v2   
+Rebuilds and restarts the 
+scraper container on      
+server-01. About 30 s of  
+ Approve for this thread ^
+>Deny                     
+<> read all B back     2/3

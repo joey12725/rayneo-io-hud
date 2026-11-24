@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Glasses with two lines of lens text, in the app's phosphor green. Drawn inside the 66dp adaptive-icon safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <group android:scaleX="0.78" android:scaleY="0.78" android:pivotX="54" android:pivotY="54">
+    <path android:fillColor="#16301A"
+        android:pathData="M31,44H43A7,7 0 0 1 50,51V57A7,7 0 0 1 43,64H31A7,7 0 0 1 24,57V51A7,7 0 0 1 31,44Z M65,44H77A7,7 0 0 1 84,51V57A7,7 0 0 1 77,64H65A7,7 0 0 1 58,57V51A7,7 0 0 1 65,44Z" />
+    <path android:strokeColor="#7DF06A" android:strokeWidth="3.6" android:strokeLineJoin="round" android:strokeLineCap="round"
+        android:pathData="M31,44H43A7,7 0 0 1 50,51V57A7,7 0 0 1 43,64H31A7,7 0 0 1 24,57V51A7,7 0 0 1 31,44Z M65,44H77A7,7 0 0 1 84,51V57A7,7 0 0 1 77,64H65A7,7 0 0 1 58,57V51A7,7 0 0 1 65,44Z M50,51.5Q54,47.5 58,51.5" />
+    <path android:strokeColor="#7DF06A" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M30.5,51H42.5 M30.5,57H37" />
+    </group>
+</vector>

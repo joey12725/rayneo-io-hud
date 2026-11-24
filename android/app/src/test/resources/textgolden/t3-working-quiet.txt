@@ -1,0 +1,7 @@
+OpenRayneo Kotlin port RUN
+-NOW- Running command     
+./gradlew assembleDebug   
+                          
+Elapsed 2h 03m            
+No output 1h 40m          
+Y read X history L say    

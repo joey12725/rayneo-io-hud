@@ -1,0 +1,7 @@
+Timer                  1/1
+New timer                 
+Set 10:00                 
+X preset L say it         
+                          
+                          
+Y start ^v time X preset  

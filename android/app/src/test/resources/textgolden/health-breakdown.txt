@@ -1,0 +1,7 @@
+Readiness               7D
+-BREAKDOWN-               
+Resting heart...        86
+HRV balance             64
+Body temperature        92
+Recovery index          80
+<> range ^v chart      1/2

@@ -1,0 +1,7 @@
+Display & sleep    7:45 PM
+>Display timeout   Never  
+ Idle time before the...  
+ Dim first           Off  
+ First press acts     On  
+ Home after lock   1 min v
+Y change B back           

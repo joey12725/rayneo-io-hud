@@ -1,0 +1,1969 @@
+{
+  "about": "The notification policy table. Read by server/gateway/test/notify-route.test.mjs (lib/notify-policy.mjs) and by the phone's mirror test (android NotificationRoutingTest.kt / data/NotificationRules.kt) so the two rule tables cannot drift. The cases run with the default policy (apis/glasses/notify-policy.default.json) plus `policy` below merged over it, and with the owner below. expect null = semantic case (the model decides); fallback = the answer when the model is unavailable (never popup). gatewayOnly cases need facts only the gateway has.",
+  "owner": {
+    "name": "Robin",
+    "aliases": [
+      "robin",
+      "rob"
+    ]
+  },
+  "policy": {
+    "dating": {
+      "enabled": true
+    }
+  },
+  "watched": [
+    "mac:t1"
+  ],
+  "watchedTitles": {
+    "mac:t1": "Fix the login flow"
+  },
+  "datingChannelsAbout": "Channels Tinder and Feeld register. A neutral notification (title Riley, body Hey) on each must get this reason; text = no channel rule, so the text rules (here: none match, semantic) decide.",
+  "datingChannels": {
+    "com.tinder": {
+      "MATCHES": "dating.match",
+      "NEW_LIKES": "dating.like",
+      "SUPER_LIKES": "dating.like",
+      "MESSAGES": "dating.message",
+      "MESSAGE_LIKES": "dating.channel",
+      "TOP_PICKS": "dating.channel",
+      "UNCATEGORIZED": "text"
+    },
+    "co.feeld": {
+      "new-match": "dating.match",
+      "chat-messages": "dating.message",
+      "PROACTIVE_MESSAGING_NOTIFICATION_CHANNEL_ID": "dating.channel",
+      "com_appboy_default_notification_channel": "text",
+      "fcm_fallback_notification_channel": "text"
+    }
+  },
+  "cases": [
+    {
+      "name": "assistant intentional, list only",
+      "input": {
+        "kind": "assistant",
+        "source": "Hermes",
+        "title": "Reminder",
+        "body": "Call mom"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "assistant.stream"
+      }
+    },
+    {
+      "name": "assistant asks for popup (legacy kind joy)",
+      "input": {
+        "kind": "joy",
+        "source": "Hermes",
+        "title": "Leave now",
+        "body": "Traffic",
+        "category": "popup"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "assistant.popup"
+      }
+    },
+    {
+      "name": "call from a contact",
+      "input": {
+        "kind": "call",
+        "title": "Mom",
+        "category": "ringing",
+        "contact": {
+          "known": true
+        },
+        "callerVerified": "none"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.contact"
+      }
+    },
+    {
+      "name": "call from a contact, verification passed",
+      "input": {
+        "kind": "call",
+        "title": "Dad",
+        "contact": {
+          "known": true,
+          "starred": true
+        },
+        "callerVerified": "passed"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.contact"
+      }
+    },
+    {
+      "name": "call from an unknown number",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0100",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.unknown"
+      }
+    },
+    {
+      "name": "call with no contact info",
+      "input": {
+        "kind": "call",
+        "title": "Unknown caller"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.unknown"
+      }
+    },
+    {
+      "name": "call from a number Robin answered before (not a contact)",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0101",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        },
+        "priorAnsweredCalls": 2
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.history"
+      }
+    },
+    {
+      "name": "call from a number Robin called",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0102",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        },
+        "ownerCalledNumber": true
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.history"
+      }
+    },
+    {
+      "name": "prior conversations override a spam label",
+      "input": {
+        "kind": "call",
+        "title": "Spam Likely",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        },
+        "priorAnsweredCalls": 1,
+        "spam": true
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.history"
+      }
+    },
+    {
+      "name": "private number is never a popup",
+      "input": {
+        "kind": "call",
+        "title": "Private number",
+        "category": "ringing",
+        "privateNumber": true,
+        "priorAnsweredCalls": 3
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.private"
+      }
+    },
+    {
+      "name": "carrier says spam",
+      "input": {
+        "kind": "call",
+        "title": "Scam Likely",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "call.spam"
+      }
+    },
+    {
+      "name": "phone spam verdict",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0103",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        },
+        "spam": true
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "call.spam"
+      }
+    },
+    {
+      "name": "pizza place calling",
+      "input": {
+        "kind": "call",
+        "title": "DOMINOS PIZZA",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.business"
+      }
+    },
+    {
+      "name": "apartment complex calling",
+      "input": {
+        "kind": "call",
+        "title": "OAK APARTMENTS",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.business"
+      }
+    },
+    {
+      "name": "package delivery calling",
+      "input": {
+        "kind": "call",
+        "title": "FEDEX",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.business"
+      }
+    },
+    {
+      "name": "phone marks a business caller",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0104",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        },
+        "business": true
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "call.business"
+      }
+    },
+    {
+      "name": "survey company is not a business",
+      "input": {
+        "kind": "call",
+        "title": "OPINION SURVEY",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.unknown"
+      }
+    },
+    {
+      "name": "call centre is not a business",
+      "input": {
+        "kind": "call",
+        "title": "CALL CENTER",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.unknown"
+      }
+    },
+    {
+      "name": "a place name is not a business",
+      "input": {
+        "kind": "call",
+        "title": "SPRINGFIELD",
+        "category": "ringing",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.unknown"
+      }
+    },
+    {
+      "name": "missed call from a business",
+      "input": {
+        "kind": "call",
+        "title": "TONY'S PIZZERIA",
+        "category": "missed",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.missed"
+      }
+    },
+    {
+      "name": "missed call from a number Robin called",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0105",
+        "category": "missed",
+        "ownerCalledNumber": true
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.missed"
+      }
+    },
+    {
+      "name": "call failing verification, even from a contact",
+      "input": {
+        "kind": "call",
+        "title": "Mom",
+        "contact": {
+          "known": true
+        },
+        "callerVerified": "failed"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "call.unverified"
+      }
+    },
+    {
+      "name": "missed call from a contact",
+      "input": {
+        "kind": "call",
+        "title": "Mom",
+        "category": "missed",
+        "contact": {
+          "known": true
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.missed"
+      }
+    },
+    {
+      "name": "missed call from an unknown number",
+      "input": {
+        "kind": "call",
+        "title": "(555) 555-0100",
+        "category": "missed",
+        "contact": {
+          "known": false
+        }
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "call.unknown"
+      }
+    },
+    {
+      "name": "dialer app notification (calls come through the call path)",
+      "input": {
+        "kind": "app",
+        "source": "com.google.android.dialer",
+        "title": "Missed call",
+        "body": "Mom"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "call.dialer"
+      }
+    },
+    {
+      "name": "calendar reminder",
+      "input": {
+        "kind": "calendar",
+        "title": "Dentist",
+        "body": "10:00 AM",
+        "category": "reminder"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "calendar.reminder"
+      }
+    },
+    {
+      "name": "calendar update",
+      "input": {
+        "kind": "calendar",
+        "title": "Agenda changed"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "calendar.update"
+      }
+    },
+    {
+      "name": "clock timer ringing",
+      "input": {
+        "kind": "clock",
+        "title": "Timer",
+        "body": "Pasta",
+        "category": "timer"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "clock.ringing"
+      }
+    },
+    {
+      "name": "clock info",
+      "input": {
+        "kind": "clock",
+        "title": "Alarm set"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "clock.update"
+      }
+    },
+    {
+      "name": "T3 needs you on a watched thread",
+      "input": {
+        "kind": "t3",
+        "source": "mac:t1",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "body": "Needs you",
+        "category": "needs-you"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "t3.needs-you"
+      }
+    },
+    {
+      "name": "T3 approval on a watched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "category": "approval"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "t3.needs-you"
+      }
+    },
+    {
+      "name": "T3 pending input (eval category) on a watched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "body": "Shall I deploy it now?",
+        "category": "needs-input"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "t3.needs-you"
+      }
+    },
+    {
+      "name": "T3 choice on a watched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "body": "Which option?",
+        "category": "choice"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "t3.needs-you"
+      }
+    },
+    {
+      "name": "T3 run failed on a watched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "body": "Failed",
+        "category": "error"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "t3.done"
+      }
+    },
+    {
+      "name": "T3 finished on a watched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "body": "Finished",
+        "category": "done"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "t3.done"
+      }
+    },
+    {
+      "name": "T3 needs you on an unwatched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t2",
+        "title": "Other",
+        "category": "needs-you"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "t3.unwatched"
+      }
+    },
+    {
+      "name": "T3 finished on an unwatched thread",
+      "input": {
+        "kind": "t3",
+        "chatId": "vps:t9",
+        "title": "Other",
+        "category": "done"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "t3.unwatched"
+      }
+    },
+    {
+      "name": "T3 Code app text naming a watched thread (the gateway's T3 notifier owns T3)",
+      "input": {
+        "kind": "app",
+        "source": "com.t3tools.t3code",
+        "title": "Fix the login flow",
+        "body": "Approval required"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "t3.app"
+      }
+    },
+    {
+      "name": "T3 Code app text, unwatched",
+      "input": {
+        "kind": "app",
+        "source": "com.t3tools.t3code",
+        "title": "Some other thread",
+        "body": "Finished"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "t3.app"
+      }
+    },
+    {
+      "name": "T3 progress text on a watched thread is semantic",
+      "input": {
+        "kind": "t3",
+        "chatId": "mac:t1",
+        "title": "Fix the login flow",
+        "body": "Running the tests now"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "suppress"
+      }
+    },
+    {
+      "name": "Beeper non-message channel",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "channelId": "BRIDGE_DISCONNECT_NOTICES",
+        "title": "Instagram disconnected",
+        "body": "Reconnect"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.notice"
+      }
+    },
+    {
+      "name": "Beeper Instagram Reel link",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "channelId": "MESSAGES_5",
+        "title": "Alex",
+        "body": "https://www.instagram.com/reel/C1abc/?igsh=x"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.share"
+      }
+    },
+    {
+      "name": "Beeper sent a reel",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Friends",
+        "body": "Sent a reel",
+        "isGroup": true
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.share"
+      }
+    },
+    {
+      "name": "Beeper TikTok link",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "https://vm.tiktok.com/ZMabc/"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.share"
+      }
+    },
+    {
+      "name": "Beeper reaction",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "Reacted ❤️ to \"see you\""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.reaction"
+      }
+    },
+    {
+      "name": "Beeper group banter",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Friends",
+        "body": "lmao",
+        "isGroup": true
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.banter"
+      }
+    },
+    {
+      "name": "Beeper photo stub in a group",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Friends",
+        "body": "Sent a photo",
+        "isGroup": true
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.media"
+      }
+    },
+    {
+      "name": "Beeper photo in a 1:1",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "Sent a photo"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "beeper.media"
+      }
+    },
+    {
+      "name": "Beeper one-time passcode",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "62881",
+        "body": "Your verification code is 483920",
+        "network": "SMS"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.otp"
+      }
+    },
+    {
+      "name": "Beeper 2FA code",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "22000",
+        "body": "G-482913 is your Google verification code.",
+        "network": "SMS"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.otp"
+      }
+    },
+    {
+      "name": "Beeper security code",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Acme",
+        "body": "Your Acme security code: 7731. Don't share this code with anyone."
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.otp"
+      }
+    },
+    {
+      "name": "Beeper sign-in code",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "88022",
+        "body": "Use 551902 to sign in to your account",
+        "network": "SMS"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.otp"
+      }
+    },
+    {
+      "name": "Beeper a friend's door code is not a one-time code",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "the door code is 4821, come on up"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": null
+    },
+    {
+      "name": "Beeper reel link with a few words",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Alex",
+        "body": "lmaooo https://www.instagram.com/reel/C9xyz/"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.share"
+      }
+    },
+    {
+      "name": "Beeper TikTok with a word",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "this is you https://www.tiktok.com/@a/video/1"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.share"
+      }
+    },
+    {
+      "name": "Beeper YouTube Short",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "https://youtube.com/shorts/abc123"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.share"
+      }
+    },
+    {
+      "name": "Beeper reel with a real question is at most stream",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Alex",
+        "body": "can we go to this place on Saturday? https://www.instagram.com/reel/C9xyz/"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.instagram"
+      }
+    },
+    {
+      "name": "Beeper Instagram profile link is never a popup",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Alex",
+        "body": "is this your cousin? https://www.instagram.com/someone/"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.instagram"
+      }
+    },
+    {
+      "name": "Beeper story reaction",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Alex",
+        "body": "Reacted 😂 to your story"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.story"
+      }
+    },
+    {
+      "name": "Beeper liked your story",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Alex",
+        "body": "Liked your story"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.story"
+      }
+    },
+    {
+      "name": "Beeper story reply is at most stream",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Alex",
+        "body": "Replied to your story: where is that??"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.story"
+      }
+    },
+    {
+      "name": "Beeper Reddit link from a friend is an ordinary link (the classifier, no ceiling)",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "https://www.reddit.com/r/homeautomation/comments/abc/x/"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": null
+    },
+    {
+      "name": "Beeper YouTube video link is an ordinary link",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "https://youtu.be/dQw4w9WgXcQ"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": null
+    },
+    {
+      "name": "Beeper shared a link stub is not a share",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Sam",
+        "body": "Shared a link"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "Beeper app announcement channel is at most stream",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Acme App",
+        "conversationTitle": "Acme App #announcements",
+        "body": "Version 3.2 is out with offline maps",
+        "isGroup": true
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.announcements"
+      }
+    },
+    {
+      "name": "Beeper product updates channel is at most stream",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Acme · product-updates",
+        "conversationTitle": "Acme · product-updates",
+        "body": "New: shared lists",
+        "isGroup": true
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.announcements"
+      }
+    },
+    {
+      "name": "Beeper morning report is at most stream",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Home bot",
+        "body": "Morning report: 41F, rain at 3 PM, 2 packages arriving"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.morning-report"
+      }
+    },
+    {
+      "name": "Beeper a group message has no ceiling",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Friends",
+        "conversationTitle": "Friends",
+        "body": "Robin are you coming tonight?",
+        "isGroup": true
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": null
+    },
+    {
+      "name": "Beeper promo SMS",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "74100",
+        "body": "Flash sale! 40% off today. Reply STOP to opt out",
+        "network": "SMS"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.promo"
+      }
+    },
+    {
+      "name": "Beeper 1:1 question is semantic",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "channelId": "MESSAGES_5",
+        "title": "Sam",
+        "body": "Are we still on for dinner at 7?"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "Beeper group plan is semantic",
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "channelId": "6f1c2a3b-0d4e-4f5a-8b9c-0123456789ab",
+        "title": "Friends",
+        "body": "Robin, can you bring the speaker?",
+        "isGroup": true,
+        "conversationTitle": "Friends",
+        "sender": "Alex"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "Beeper muted chat",
+      "gatewayOnly": true,
+      "facts": {
+        "chat": {
+          "resolved": true,
+          "chatId": "!a:beeper.local",
+          "muted": true,
+          "mentions": 0,
+          "spam": {
+            "spam": false
+          }
+        }
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Muted group",
+        "body": "Anyone around?",
+        "isGroup": true
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.muted"
+      }
+    },
+    {
+      "name": "Beeper muted chat with an @mention is semantic",
+      "gatewayOnly": true,
+      "facts": {
+        "chat": {
+          "resolved": true,
+          "chatId": "!a:beeper.local",
+          "muted": true,
+          "mentions": 1,
+          "spam": {
+            "spam": false
+          }
+        }
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Muted group",
+        "body": "@Robin are you around?",
+        "isGroup": true
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "Beeper spam chat",
+      "gatewayOnly": true,
+      "facts": {
+        "chat": {
+          "resolved": true,
+          "chatId": "!s:beeper.local",
+          "muted": false,
+          "mentions": 0,
+          "spam": {
+            "spam": true
+          }
+        }
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "+13125550100",
+        "body": "You won a cruise",
+        "network": "SMS"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.spam"
+      }
+    },
+    {
+      "name": "Beeper transactional chat",
+      "gatewayOnly": true,
+      "facts": {
+        "chat": {
+          "resolved": true,
+          "chatId": "!o:beeper.local",
+          "muted": false,
+          "mentions": 0,
+          "spam": {
+            "spam": false
+          },
+          "lowImportance": true,
+          "reason": "transactional"
+        }
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Chase",
+        "body": "Your card was charged"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "beeper.transactional"
+      }
+    },
+    {
+      "name": "Beeper chat classified as one-time codes",
+      "gatewayOnly": true,
+      "facts": {
+        "chat": {
+          "resolved": true,
+          "chatId": "!c:beeper.local",
+          "muted": false,
+          "mentions": 0,
+          "spam": {
+            "spam": false
+          },
+          "lowImportance": true,
+          "reason": "otp"
+        }
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Bank",
+        "body": "Here you go: 118204"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "beeper.otp"
+      }
+    },
+    {
+      "name": "Beeper promo words in a chat Robin writes in are not a promotion",
+      "gatewayOnly": true,
+      "facts": {
+        "relationship": {
+          "msgs30d": 140,
+          "ownerMsgs30d": 22,
+          "ownerShare": 0.16,
+          "tier": "frequent"
+        }
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Automation",
+        "conversationTitle": "Automation",
+        "body": "the sale on the sensors ends today, 20% off",
+        "isGroup": true
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "Beeper promo words in his own configured chat are not a promotion",
+      "gatewayOnly": true,
+      "facts": {
+        "ownChat": true
+      },
+      "input": {
+        "kind": "beeper",
+        "source": "com.beeper.android",
+        "title": "Automation",
+        "conversationTitle": "Automation",
+        "body": "new discount code for the relay boards",
+        "isGroup": true
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "Tinder match channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "MATCHES",
+        "title": "You have a new match!",
+        "body": "Say hi to Riley"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.match"
+      }
+    },
+    {
+      "name": "Tinder like channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "NEW_LIKES",
+        "title": "Someone liked you",
+        "body": "Swipe to find out"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "dating.like"
+      }
+    },
+    {
+      "name": "Tinder message channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "MESSAGES",
+        "title": "Riley",
+        "body": "Hey! How was your weekend?"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.message"
+      }
+    },
+    {
+      "name": "Tinder top picks",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "TOP_PICKS",
+        "title": "Your Top Picks are here",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.channel"
+      }
+    },
+    {
+      "name": "Tinder Gold upsell on the likes channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "NEW_LIKES",
+        "title": "See who likes you",
+        "body": "Upgrade to Tinder Gold"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Tinder super like channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "SUPER_LIKES",
+        "title": "Someone Super Liked you!",
+        "body": ""
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "dating.like"
+      }
+    },
+    {
+      "name": "Tinder message like (a reaction to Robin's message)",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "MESSAGE_LIKES",
+        "title": "Riley",
+        "body": "Liked your message"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.channel"
+      }
+    },
+    {
+      "name": "Tinder streak nag on the matches channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "MATCHES",
+        "title": "Keep your streak going",
+        "body": "Your matches are waiting"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Tinder someone new nearby on the likes channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "NEW_LIKES",
+        "title": "Someone new nearby",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Tinder promo category on the likes channel",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "NEW_LIKES",
+        "category": "promo",
+        "title": "You have 3 new likes",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.category"
+      }
+    },
+    {
+      "name": "Tinder message channel keeps popping up whatever the category",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "MESSAGES",
+        "category": "msg",
+        "title": "Riley",
+        "body": "See you at 8?"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.message"
+      }
+    },
+    {
+      "name": "Tinder Uncategorized match (text rule)",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "UNCATEGORIZED",
+        "title": "It's a Match!",
+        "body": "You and Riley liked each other"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.match"
+      }
+    },
+    {
+      "name": "Tinder Uncategorized boost upsell (text rule)",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "UNCATEGORIZED",
+        "title": "Be seen by more people",
+        "body": "Get a Boost now"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Tinder Uncategorized recommendation category",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "UNCATEGORIZED",
+        "category": "recommendation",
+        "title": "Tinder",
+        "body": "Check this profile"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.category"
+      }
+    },
+    {
+      "name": "Tinder Uncategorized ambiguous is semantic, suppressed offline",
+      "input": {
+        "kind": "app",
+        "source": "com.tinder",
+        "channelId": "UNCATEGORIZED",
+        "title": "Tinder",
+        "body": "Riley is active now"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "suppress"
+      }
+    },
+    {
+      "name": "Feeld new match channel",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "new-match",
+        "title": "New match",
+        "body": "You connected with Sky"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.match"
+      }
+    },
+    {
+      "name": "Feeld Majestic upsell on the match channel",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "new-match",
+        "title": "Go Majestic",
+        "body": "See everyone who liked you"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Feeld proactive messaging (Zendesk)",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "PROACTIVE_MESSAGING_NOTIFICATION_CHANNEL_ID",
+        "title": "Feeld",
+        "body": "We have a new message for you"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.channel"
+      }
+    },
+    {
+      "name": "Feeld Braze general: someone new nearby",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "com_appboy_default_notification_channel",
+        "title": "Feeld",
+        "body": "Someone new is nearby"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Feeld Braze general: like (text rule)",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "com_appboy_default_notification_channel",
+        "title": "Feeld",
+        "body": "Someone liked you"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "dating.like"
+      }
+    },
+    {
+      "name": "Feeld ping on the fallback channel (text rule)",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "fcm_fallback_notification_channel",
+        "title": "Feeld",
+        "body": "Sky sent you a Ping"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "dating.like"
+      }
+    },
+    {
+      "name": "Feeld Braze ambiguous is semantic, suppressed offline",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "com_appboy_default_notification_channel",
+        "title": "Feeld",
+        "body": "Your desires changed"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "suppress"
+      }
+    },
+    {
+      "name": "Hinge match",
+      "input": {
+        "kind": "app",
+        "source": "co.hinge.app",
+        "channelId": "matches",
+        "title": "It's a match!",
+        "body": "You and Jordan liked each other"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.match"
+      }
+    },
+    {
+      "name": "Hinge promotion channel",
+      "input": {
+        "kind": "app",
+        "source": "co.hinge.app",
+        "channelId": "promotions",
+        "title": "50% off Hinge+",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.channel"
+      }
+    },
+    {
+      "name": "Bumble like",
+      "input": {
+        "kind": "app",
+        "source": "com.bumble.app",
+        "channelId": "liked_you",
+        "title": "Someone new liked you",
+        "body": ""
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "dating.like"
+      }
+    },
+    {
+      "name": "Bumble expiring nag",
+      "input": {
+        "kind": "app",
+        "source": "com.bumble.app",
+        "channelId": "expiring",
+        "title": "Your match expires soon",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.channel"
+      }
+    },
+    {
+      "name": "Feeld chat message",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "chat-messages",
+        "title": "Sky",
+        "body": "Hi there"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.message"
+      }
+    },
+    {
+      "name": "Feeld like on the fallback channel (text rule)",
+      "input": {
+        "kind": "app",
+        "source": "co.feeld",
+        "channelId": "fcm_fallback_notification_channel",
+        "title": "Feeld",
+        "body": "Someone liked you"
+      },
+      "expect": {
+        "route": "stream",
+        "reason": "dating.like"
+      }
+    },
+    {
+      "name": "Taimi new message (text rule)",
+      "input": {
+        "kind": "app",
+        "source": "com.takimi.android",
+        "channelId": "other",
+        "title": "Taimi",
+        "body": "Alex sent you a message"
+      },
+      "expect": {
+        "route": "popup",
+        "reason": "dating.message"
+      }
+    },
+    {
+      "name": "Taimi people near you",
+      "input": {
+        "kind": "app",
+        "source": "com.takimi.android",
+        "channelId": "other",
+        "title": "Taimi",
+        "body": "New people near you are online"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "dating.promo"
+      }
+    },
+    {
+      "name": "Taimi ambiguous is semantic, suppressed offline",
+      "input": {
+        "kind": "app",
+        "source": "com.takimi.android",
+        "channelId": "other",
+        "title": "Taimi",
+        "body": "Alex is online now"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "suppress"
+      }
+    },
+    {
+      "name": "Google Messages (messaging is centralized through Beeper)",
+      "input": {
+        "kind": "app",
+        "source": "com.google.android.apps.messaging",
+        "title": "Mom",
+        "body": "Call me"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "WhatsApp",
+      "input": {
+        "kind": "app",
+        "source": "com.whatsapp",
+        "title": "Sam",
+        "body": "hi"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "Instagram DM or Reel share",
+      "input": {
+        "kind": "app",
+        "source": "com.instagram.android",
+        "title": "alex shared a reel",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "Messenger",
+      "input": {
+        "kind": "app",
+        "source": "com.facebook.orca",
+        "title": "Sam",
+        "body": "hey"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "Signal",
+      "input": {
+        "kind": "app",
+        "source": "org.thoughtcrime.securesms",
+        "title": "Sam",
+        "body": "hey"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "Telegram",
+      "input": {
+        "kind": "app",
+        "source": "org.telegram.messenger",
+        "title": "Sam",
+        "body": "hey"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "Discord app",
+      "input": {
+        "kind": "app",
+        "source": "com.discord",
+        "title": "#general",
+        "body": "@Robin look"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.messaging"
+      }
+    },
+    {
+      "name": "Gmail",
+      "input": {
+        "kind": "app",
+        "source": "com.google.android.gm",
+        "title": "Your receipt",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.email"
+      }
+    },
+    {
+      "name": "YouTube",
+      "input": {
+        "kind": "app",
+        "source": "com.google.android.youtube",
+        "title": "New video",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.media"
+      }
+    },
+    {
+      "name": "Home Assistant",
+      "input": {
+        "kind": "app",
+        "source": "io.homeassistant.companion.android",
+        "title": "Integration stale",
+        "body": ""
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.home"
+      }
+    },
+    {
+      "name": "ChatGPT response ready",
+      "input": {
+        "kind": "app",
+        "source": "com.openai.chatgpt",
+        "title": "ChatGPT",
+        "body": "Your response is ready"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.assistant"
+      }
+    },
+    {
+      "name": "Package delivery app (out of scope)",
+      "input": {
+        "kind": "app",
+        "source": "com.amazon.mShop.android.shopping",
+        "title": "Delivered",
+        "body": "Your package was delivered"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.default"
+      }
+    },
+    {
+      "name": "Any other app",
+      "input": {
+        "kind": "app",
+        "source": "com.example.anything",
+        "title": "Hello",
+        "body": "World"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "deny.default"
+      }
+    },
+    {
+      "name": "hermes: glasses channel (api_server) never notifies",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:api_server",
+        "app": "Hermes",
+        "title": "Glasses",
+        "body": "Here you go",
+        "category": "reply"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "hermes.glasses"
+      }
+    },
+    {
+      "name": "hermes: empty reply",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:discord",
+        "app": "Hermes",
+        "title": "#general",
+        "body": "   ",
+        "category": "reply"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "hermes.empty"
+      }
+    },
+    {
+      "name": "hermes: scheduled job answered [SILENT]",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:cron",
+        "app": "Hermes",
+        "title": "Spotify backup",
+        "body": "[SILENT]",
+        "category": "scheduled"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "hermes.silent"
+      }
+    },
+    {
+      "name": "hermes: NO_REPLY",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:discord",
+        "app": "Hermes",
+        "title": "#general",
+        "body": "NO_REPLY",
+        "category": "reply"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "hermes.silent"
+      }
+    },
+    {
+      "name": "hermes: scheduled output kept local (not delivered)",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:cron",
+        "app": "Hermes",
+        "title": "Nightly ingest",
+        "body": "Ingested 3 notes",
+        "category": "local"
+      },
+      "expect": {
+        "route": "suppress",
+        "reason": "hermes.undelivered"
+      }
+    },
+    {
+      "name": "hermes: a real Discord reply is semantic (the classifier), list when offline",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:discord",
+        "app": "Hermes",
+        "title": "#general",
+        "body": "Found three options for Friday night",
+        "isGroup": true,
+        "category": "reply"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      }
+    },
+    {
+      "name": "hermes: delivered scheduled report is semantic",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:cron",
+        "app": "Hermes",
+        "title": "Morning brief",
+        "body": "Interview at 8:20 tomorrow, set an alarm",
+        "category": "scheduled"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": {
+        "route": "stream",
+        "reason": "cap.morning-report"
+      }
+    },
+    {
+      "name": "hermes: a reply Robin is waiting on has no ceiling",
+      "input": {
+        "kind": "hermes",
+        "source": "hermes:discord",
+        "app": "Hermes",
+        "title": "#general",
+        "body": "She said yes to 7 tonight, want me to book it?",
+        "isGroup": true,
+        "category": "reply"
+      },
+      "expect": null,
+      "fallback": {
+        "route": "stream"
+      },
+      "cap": null
+    }
+  ]
+}

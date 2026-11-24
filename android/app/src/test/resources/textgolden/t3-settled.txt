@@ -1,0 +1,7 @@
+Settled            7:45 PM
+>Fix flaky e2e log... 1h  
+ rayneo-glasses           
+ Bump deps (Nov)      2h  
+ Add memo upload...   3h  
+ GBrain ingest dry... 1d v
+Y open B back             

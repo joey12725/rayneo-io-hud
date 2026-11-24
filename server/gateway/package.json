@@ -1,0 +1,16 @@
+{
+  "name": "rayneo-io-hud-gateway",
+  "private": true,
+  "type": "module",
+  "description": "RayNeo iO HUD gateway: the phone app's server for Hermes, Beeper, T3 Code, notifications and recording delivery. Node 24, no dependencies.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/",
+    "config:examples": "node tools/config-examples.mjs",
+    "config:check": "node tools/config-examples.mjs --check"
+  }
+}

@@ -1,0 +1,3010 @@
+{
+  "v": 1,
+  "hash": "478c73be91f224a79c44fff7c6ee7ca4a50c336f7b1ec3f575e352494bd145ef",
+  "ops": [
+    {
+      "name": "glasses.get_context",
+      "app": "glasses",
+      "title": "Read glasses context",
+      "description": "What is on the user's glasses right now: screen, app, title, full screen text, list rows, button legend, lock, media, call and the assistant state.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.read_screen",
+      "app": "glasses",
+      "title": "Read the glasses screen",
+      "description": "Text of the current glasses screen (works in image mode too), its list rows with indexes, and what each button does here. grid=true adds the exact character grid.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "grid": {
+            "type": "boolean",
+            "description": "Also return the rendered character grid"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.press",
+      "app": "glasses",
+      "title": "Press a remote button",
+      "description": "Press a button on the user's glasses remote exactly as they would: y select, b back, x action, a now playing, r notifications, r2 play/pause, l2 quiet (on the assistant), minus lock, plus context action, star apps, heart people, arrows move. Returns the new context.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 12000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "button": {
+            "type": "string",
+            "description": "Button to press",
+            "enum": [
+              "y",
+              "b",
+              "x",
+              "a",
+              "l2",
+              "r",
+              "r2",
+              "minus",
+              "plus",
+              "star",
+              "heart",
+              "up",
+              "down",
+              "left",
+              "right"
+            ]
+          },
+          "hold": {
+            "type": "boolean",
+            "description": "Hold it (~0.6 s) instead of tapping, e.g. b hold = home, plus hold = context menu"
+          },
+          "times": {
+            "type": "integer",
+            "description": "Repeat the tap this many times (default 1)",
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": [
+          "button"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.open_app",
+      "app": "glasses",
+      "title": "Open a glasses app",
+      "description": "Open an app or screen on the glasses. 'home' returns to Home; 'apps' shows the app grid; 'now-playing' the media player; 'calls' the phone call screen.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "app": {
+            "type": "string",
+            "description": "App or screen id (see glasses_list_apps)",
+            "enum": [
+              "home",
+              "apps",
+              "now-playing",
+              "calls",
+              "joy",
+              "beeper",
+              "media",
+              "t3",
+              "calendar",
+              "notifications",
+              "people",
+              "report",
+              "health",
+              "ha",
+              "docs",
+              "teleprompter",
+              "memo",
+              "status",
+              "settings",
+              "phone",
+              "clock",
+              "prompter",
+              "notifs",
+              "np",
+              "home-assistant"
+            ]
+          }
+        },
+        "required": [
+          "app"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.list_apps",
+      "app": "glasses",
+      "title": "List glasses apps",
+      "description": "The apps on the user's glasses in their order (ids for glasses_open_app), plus the extra screens home, apps, now-playing and calls.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.back",
+      "app": "glasses",
+      "title": "Go back",
+      "description": "Go back one screen on the glasses (the B button).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.home",
+      "app": "glasses",
+      "title": "Go to Home",
+      "description": "Return the glasses to the Home screen (B hold).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.select_row",
+      "app": "glasses",
+      "title": "Pick a list row",
+      "description": "On a list screen, pick a row by index (from glasses_read_screen) or by label, then open it (Y, default), run its action (X) or just focus it.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Row index from glasses_read_screen rows",
+            "minimum": 0,
+            "maximum": 500
+          },
+          "label": {
+            "type": "string",
+            "description": "Row label (case-insensitive; exact match first, then contains)",
+            "maxLength": 200
+          },
+          "action": {
+            "type": "string",
+            "description": "open (Y, default), act (X) or focus",
+            "enum": [
+              "open",
+              "act",
+              "focus"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.type_text",
+      "app": "glasses",
+      "title": "Type into the glasses",
+      "description": "Send text where the user would dictate on the current screen (e.g. a Beeper thread sends a message, a T3 thread a prompt). glasses_read_screen's canType says what it does. mode=steer steers a running T3 turn.",
+      "risk": "send",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 20000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text, exactly as it should be sent",
+            "maxLength": 4000
+          },
+          "mode": {
+            "type": "string",
+            "description": "send (default) or steer",
+            "enum": [
+              "send",
+              "steer"
+            ]
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.lock",
+      "app": "glasses",
+      "title": "Lock the glasses",
+      "description": "Lock the glasses (blank display; the remote only unlocks), like a minus tap.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.unlock",
+      "app": "glasses",
+      "title": "Unlock the glasses",
+      "description": "Unlock the glasses and show the current screen again.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.show_toast",
+      "app": "glasses",
+      "title": "Flash a message",
+      "description": "Flash a short message on the glasses for about two seconds.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Message, up to 60 characters",
+            "maxLength": 60
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.list_operations",
+      "app": "glasses",
+      "title": "List glasses operations",
+      "description": "Every glasses operation (including ones not offered as tools), with risk and whether it can run right now. Run any of them with glasses_run.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "app": {
+            "type": "string",
+            "description": "Only this app (e.g. beeper, joy, glasses)"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "glasses.run",
+      "app": "glasses",
+      "title": "Run a glasses operation",
+      "description": "Run any glasses operation by name (see glasses_list_operations), including ones that are not separate tools. Confirmation follows the target operation.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 45000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "type": "string",
+            "description": "Operation name, e.g. joy.read_reply",
+            "maxLength": 64
+          },
+          "args": {
+            "type": "object",
+            "description": "Arguments for that operation"
+          }
+        },
+        "required": [
+          "op"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "home.summary",
+      "app": "home",
+      "title": "Read the Home summary",
+      "description": "What the user's glasses Home screen summarises: weather, next event, Beeper unread chats, T3 threads needing them, now playing, notifications, call and passive listening.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "joy.read_reply",
+      "app": "joy",
+      "title": "Read the assistant's glasses reply",
+      "description": "The conversation currently on the glasses assistant screen: status, the last prompt and the assistant's last reply text.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "joy.new_conversation",
+      "app": "joy",
+      "title": "Start a new assistant conversation",
+      "description": "Start a fresh glasses conversation with the assistant (the next glasses message begins a new session).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "joy.set_quiet",
+      "app": "joy",
+      "title": "Set assistant quiet wait",
+      "description": "Quiet wait on: the assistant's glasses replies arrive as a notification instead of taking over the screen (the L2 toggle).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean",
+            "description": "true = quiet wait on"
+          }
+        },
+        "required": [
+          "on"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "joy.start_voice_call",
+      "app": "joy",
+      "title": "Start an assistant voice call",
+      "description": "Start a live voice call with the assistant on the glasses (uses the microphone).",
+      "risk": "call",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "joy.end_voice_call",
+      "app": "joy",
+      "title": "End the assistant voice call",
+      "description": "Hang up the live assistant voice call.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.list_chats",
+      "app": "beeper",
+      "title": "List Beeper chats",
+      "description": "The user's Beeper chats, unread first: id, name, network, unread count, counts (on the unread badge), muted, mentions, spam and the last message.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "unread_only": {
+            "type": "boolean",
+            "description": "Only chats on the unread badge (unread, not muted unless @mentioned, not spam)"
+          },
+          "include_spam": {
+            "type": "boolean",
+            "description": "Also list chats marked spam (default false)"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "How many (default 15)",
+            "minimum": 1,
+            "maximum": 25
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.read_chat",
+      "app": "beeper",
+      "title": "Read a Beeper chat",
+      "description": "The latest messages of one chat (id or name), oldest first, with message ids for reply_to and beeper_react. Does not mark it read.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name (see beeper_list_chats)",
+            "maxLength": 200
+          },
+          "limit": {
+            "type": "integer",
+            "description": "How many recent messages (default 10)",
+            "minimum": 1,
+            "maximum": 25
+          }
+        },
+        "required": [
+          "chat"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.open_chat",
+      "app": "beeper",
+      "title": "Open a Beeper chat",
+      "description": "Show one chat's thread on the glasses (newest message focused), e.g. so the user can read or answer it himself.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "chat"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.send_message",
+      "app": "beeper",
+      "title": "Send Beeper message",
+      "description": "Send a text message to one of the user's chats (id or name). reply_to quotes a message id from beeper_read_chat. mentions maps an @token in the text to a participant id (from dictation); without ids @Name goes as plain text.",
+      "risk": "send",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name (see beeper_list_chats)",
+            "maxLength": 200
+          },
+          "text": {
+            "type": "string",
+            "description": "Message text, exactly as it should be sent",
+            "maxLength": 4000
+          },
+          "reply_to": {
+            "type": "string",
+            "description": "Message id to reply to (optional)",
+            "maxLength": 300
+          },
+          "mentions": {
+            "type": "object",
+            "description": "Optional {\"@Token\": participant id} for each @mention in the text"
+          }
+        },
+        "required": [
+          "chat",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.react",
+      "app": "beeper",
+      "title": "React to a Beeper message",
+      "description": "Add (or remove) an emoji reaction on a message (id from beeper_read_chat). On the assistant's approval prompts, ✅ approves and ❌ cancels.",
+      "risk": "send",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name",
+            "maxLength": 200
+          },
+          "message_id": {
+            "type": "string",
+            "description": "Message id from beeper_read_chat",
+            "maxLength": 300
+          },
+          "emoji": {
+            "type": "string",
+            "description": "The emoji, e.g. 👍 ❤️ 😂 ✅",
+            "maxLength": 16
+          },
+          "remove": {
+            "type": "boolean",
+            "description": "Remove the user's reaction instead"
+          }
+        },
+        "required": [
+          "chat",
+          "message_id",
+          "emoji"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.mark_read",
+      "app": "beeper",
+      "title": "Mark a Beeper chat read",
+      "description": "Mark one chat read (it leaves the unread badge), as opening it on the glasses does.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "chat"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.mark_spam",
+      "app": "beeper",
+      "title": "Mark a Beeper chat spam",
+      "description": "Mark one chat as spam: it stops counting as unread and its notifications stay quiet. Stored in the gateway only; Beeper is not told.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "chat"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "beeper.mark_not_spam",
+      "app": "beeper",
+      "title": "Mark a Beeper chat not spam",
+      "description": "Undo spam for one chat (also overrides the automatic spam filter for it).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "Chat id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "chat"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.list_threads",
+      "app": "t3",
+      "title": "List T3 threads",
+      "description": "The user's T3 Code threads across machines: machine, id, title, project, provider, status (input/approval/request/limited/failed need the user; working; done), age and current step.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "needs_you, working, done or all (default)",
+            "enum": [
+              "needs_you",
+              "working",
+              "done",
+              "all"
+            ]
+          },
+          "include_settled": {
+            "type": "boolean",
+            "description": "Also list settled (archived) threads"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.read_thread",
+      "app": "t3",
+      "title": "Read a T3 thread",
+      "description": "One thread in full: status, the agent's latest message, a pending request (approval command, or questions with option labels), the working step and recent history.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "thread": {
+            "type": "string",
+            "description": "Thread id or title (see t3_list_threads)",
+            "maxLength": 300
+          },
+          "machine": {
+            "type": "string",
+            "description": "Machine id, when the thread id is not unique",
+            "maxLength": 100
+          },
+          "history": {
+            "type": "integer",
+            "description": "How many recent history entries (default 4)",
+            "minimum": 0,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "thread"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.open_thread",
+      "app": "t3",
+      "title": "Open a T3 thread",
+      "description": "Show one T3 thread on the glasses (its current view: working, approval, question or latest message).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "thread": {
+            "type": "string",
+            "description": "Thread id or title (see t3_list_threads)",
+            "maxLength": 300
+          },
+          "machine": {
+            "type": "string",
+            "description": "Machine id, when the thread id is not unique",
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "thread"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.send_message",
+      "app": "t3",
+      "title": "Send to a T3 thread",
+      "description": "Send a prompt to a T3 thread. A running thread queues it for after the turn unless mode is steer (redirects the running turn). /glasses is added so replies come back short.",
+      "risk": "send",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 20000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "thread": {
+            "type": "string",
+            "description": "Thread id or title (see t3_list_threads)",
+            "maxLength": 300
+          },
+          "machine": {
+            "type": "string",
+            "description": "Machine id, when the thread id is not unique",
+            "maxLength": 100
+          },
+          "text": {
+            "type": "string",
+            "description": "The prompt, exactly as it should be sent",
+            "maxLength": 4000
+          },
+          "mode": {
+            "type": "string",
+            "description": "send (default; queues while running), queue or steer",
+            "enum": [
+              "send",
+              "queue",
+              "steer"
+            ]
+          }
+        },
+        "required": [
+          "thread",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.respond",
+      "app": "t3",
+      "title": "Answer a T3 request",
+      "description": "Answer a thread's pending request. Approval: decision approve, approve_for_thread or deny. Questions: choice (one question) or answers {question id: option label, number, list or free text}.",
+      "risk": "send",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 20000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "thread": {
+            "type": "string",
+            "description": "Thread id or title (see t3_list_threads)",
+            "maxLength": 300
+          },
+          "machine": {
+            "type": "string",
+            "description": "Machine id, when the thread id is not unique",
+            "maxLength": 100
+          },
+          "decision": {
+            "type": "string",
+            "description": "For an approval: approve (once), approve_for_thread or deny",
+            "enum": [
+              "approve",
+              "approve_for_thread",
+              "deny"
+            ]
+          },
+          "choice": {
+            "type": "string",
+            "description": "For a single question: the option label or number, or a free-text answer",
+            "maxLength": 2000
+          },
+          "answers": {
+            "type": "object",
+            "description": "For several questions: question id -> option label, option number, list of labels (multi) or free text"
+          }
+        },
+        "required": [
+          "thread"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.new_thread",
+      "app": "t3",
+      "title": "Start a T3 thread",
+      "description": "Start a new T3 Code thread in a project (name or id; t3.list_projects via glasses_run lists them) with a first prompt. It starts a real agent run, then opens on the glasses.",
+      "risk": "send",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 30000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "description": "Project name or id",
+            "maxLength": 200
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The first prompt",
+            "maxLength": 4000
+          },
+          "machine": {
+            "type": "string",
+            "description": "Machine id or label, when the project exists on several",
+            "maxLength": 100
+          },
+          "open": {
+            "type": "boolean",
+            "description": "Open the new thread on the glasses (default true)"
+          }
+        },
+        "required": [
+          "project",
+          "prompt"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.usage",
+      "app": "t3",
+      "title": "Read T3 usage",
+      "description": "Coding-agent usage per provider and machine: each limit window's used percent, reset time and pace, plus available usage-reset credits.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.list_machines",
+      "app": "t3",
+      "title": "List T3 machines",
+      "description": "The user's T3 machines (environments): id, label, online, OS, last seen, whether the assistant can write there, and pairing problems.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.list_projects",
+      "app": "t3",
+      "title": "List T3 projects",
+      "description": "Projects a new T3 thread can start in: id, name and machine.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "t3.use_reset",
+      "app": "t3",
+      "title": "Use a T3 usage reset",
+      "description": "Spend one usage-reset credit (ids from t3_usage) to reset a provider's limits now.",
+      "risk": "spend",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 20000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "machine": {
+            "type": "string",
+            "description": "Machine from t3_usage",
+            "maxLength": 100
+          },
+          "instance_id": {
+            "type": "string",
+            "description": "instanceId from t3_usage",
+            "maxLength": 200
+          },
+          "credit_id": {
+            "type": "string",
+            "description": "Credit id from t3_usage",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "machine",
+          "instance_id",
+          "credit_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.now_playing",
+      "app": "media",
+      "title": "Read now playing",
+      "description": "What is playing on the user's phone or Spotify: source (spotify, abs audiobook, youtube, phone), title, artist, playing, position, device, volume and speed.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.play",
+      "app": "media",
+      "title": "Resume playback",
+      "description": "Resume whatever was playing (Spotify, an audiobook or the phone's media app).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.pause",
+      "app": "media",
+      "title": "Pause playback",
+      "description": "Pause playback.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.next",
+      "app": "media",
+      "title": "Next track",
+      "description": "Skip to the next track (Spotify or the phone's media app).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.previous",
+      "app": "media",
+      "title": "Previous track",
+      "description": "Go back to the previous track.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.rewind",
+      "app": "media",
+      "title": "Rewind",
+      "description": "Jump back in an audiobook or video (default 30 s, like the remote).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "seconds": {
+            "type": "integer",
+            "description": "Seconds (default 30)",
+            "minimum": 1,
+            "maximum": 3600
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.forward",
+      "app": "media",
+      "title": "Skip forward",
+      "description": "Jump forward in an audiobook or video (default 30 s, like the remote).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "seconds": {
+            "type": "integer",
+            "description": "Seconds (default 30)",
+            "minimum": 1,
+            "maximum": 3600
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.set_speed",
+      "app": "media",
+      "title": "Set playback speed",
+      "description": "Playback speed for audiobooks and videos (the glasses offer 1, 1.25, 1.5, 1.75 and 2). Not for Spotify.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "speed": {
+            "type": "number",
+            "description": "Speed, 0.5 to 3",
+            "minimum": 0.5,
+            "maximum": 3.0
+          }
+        },
+        "required": [
+          "speed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.set_volume",
+      "app": "media",
+      "title": "Set media volume",
+      "description": "Media volume, 0 to 15 (the remote's R2 + up/down steps). Spotify Connect devices use their own volume.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "integer",
+            "description": "0 to 15",
+            "minimum": 0,
+            "maximum": 15
+          }
+        },
+        "required": [
+          "level"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.list_spotify",
+      "app": "media",
+      "title": "List Spotify playlists",
+      "description": "The Spotify lists the glasses offer: Discover Weekly, Liked Songs, recent playlists and the library, with uris for media_play_spotify.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.play_spotify",
+      "app": "media",
+      "title": "Play on Spotify",
+      "description": "Play a Spotify list: liked=true for Liked Songs, playlist by name or uri, or query to match the user's playlists by name (catalog search is not available). device picks the Connect device.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 40000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "playlist": {
+            "type": "string",
+            "description": "Playlist name or spotify: uri (e.g. Discover Weekly)",
+            "maxLength": 300
+          },
+          "liked": {
+            "type": "boolean",
+            "description": "Play Liked Songs"
+          },
+          "query": {
+            "type": "string",
+            "description": "Words to match against the user's playlist names",
+            "maxLength": 200
+          },
+          "device": {
+            "type": "string",
+            "description": "Spotify Connect device id or name (see media.list_devices)",
+            "maxLength": 200
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.list_devices",
+      "app": "media",
+      "title": "List Spotify devices",
+      "description": "Spotify Connect devices (id, name, active) for media.transfer and media_play_spotify.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.transfer",
+      "app": "media",
+      "title": "Move Spotify playback",
+      "description": "Move Spotify playback to another Connect device (id or name).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "type": "string",
+            "description": "Device id or name (see media.list_devices)",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "device"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.list_audiobooks",
+      "app": "media",
+      "title": "List audiobooks",
+      "description": "The user's recently played, unfinished audiobooks (Audiobookshelf): id, title, author, chapter, progress.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.play_audiobook",
+      "app": "media",
+      "title": "Play an audiobook",
+      "description": "Play an audiobook by title or id (see media.list_audiobooks) from where the user left off. Without book, resumes the current or most recent book.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 20000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "book": {
+            "type": "string",
+            "description": "Book title or id (optional)",
+            "maxLength": 300
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.list_youtube",
+      "app": "media",
+      "title": "List YouTube videos",
+      "description": "Videos in the YouTube list for media_play_youtube: id, title, channel, duration.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "How many (default 10)",
+            "minimum": 1,
+            "maximum": 25
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "media.play_youtube",
+      "app": "media",
+      "title": "Play a YouTube video",
+      "description": "Play a video from the YouTube list (id or title from media_list_youtube) on the phone; Now Playing shows it.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 20000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "video": {
+            "type": "string",
+            "description": "Video id or title",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "video"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notifications.list",
+      "app": "notifications",
+      "title": "List glasses notifications",
+      "description": "The glasses Notifications list, most important first: id, app, title, text, importance, route (stream or popup), age and whether it opens an app.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "How many (default 10)",
+            "minimum": 1,
+            "maximum": 25
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notifications.open",
+      "app": "notifications",
+      "title": "Open a notification",
+      "description": "Open a notification in its app on the glasses (Beeper thread, T3 thread, calendar day...), as Y does; the notification is then cleared.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Notification id (see notifications_list) or part of its title",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notifications.dismiss",
+      "app": "notifications",
+      "title": "Dismiss a notification",
+      "description": "Remove one notification from the glasses list (X). The message or chat in the source app is not touched.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Notification id (see notifications_list) or part of its title",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notifications.clear",
+      "app": "notifications",
+      "title": "Clear all notifications",
+      "description": "Clear the whole glasses Notifications list, including missed calls. Source apps are not touched.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "contacts.search",
+      "app": "contacts",
+      "title": "Search contacts",
+      "description": "Find people in the user's phone contacts by name, nickname or relationship (\"mom\"). Returns names, number labels and numbers (masked unless reveal_numbers).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Name, nickname or relationship",
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "description": "How many (default 8)",
+            "minimum": 1,
+            "maximum": 25
+          },
+          "reveal_numbers": {
+            "type": "boolean",
+            "description": "Full numbers; only when the user asked for a number"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.place",
+      "app": "call",
+      "title": "Place a phone call",
+      "description": "Call a contact (name, nickname like \"mom\", or contact_id) or a number from the user's phone. Ambiguous names return candidates instead of calling. The user may have to confirm on the glasses.",
+      "risk": "call",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 35000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "contact": {
+            "type": "string",
+            "description": "Contact name, nickname/relationship, or contact_id from contacts_search",
+            "maxLength": 100
+          },
+          "number": {
+            "type": "string",
+            "description": "Phone number to dial (instead of contact)",
+            "maxLength": 40
+          },
+          "label": {
+            "type": "string",
+            "description": "Which number: mobile, home, work, main, other",
+            "enum": [
+              "mobile",
+              "home",
+              "work",
+              "main",
+              "other"
+            ]
+          },
+          "route": {
+            "type": "string",
+            "description": "Audio: bluetooth (default when connected), earpiece, speaker, wired, or a device name",
+            "maxLength": 60
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.answer",
+      "app": "call",
+      "title": "Answer the ringing call",
+      "description": "Answer the phone call that is ringing now (see call_state).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Call id (default: the ringing call)",
+            "maxLength": 80
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.decline",
+      "app": "call",
+      "title": "Decline the ringing call",
+      "description": "Decline (reject) the phone call that is ringing now.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Call id (default: the ringing call)",
+            "maxLength": 80
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.hangup",
+      "app": "call",
+      "title": "Hang up the call",
+      "description": "End the current phone call (or a call by id).",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Call id (default: the current call)",
+            "maxLength": 80
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.mute",
+      "app": "call",
+      "title": "Mute or unmute the call",
+      "description": "Mute (on=true) or unmute the user's microphone on the current phone call.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean",
+            "description": "true = muted"
+          }
+        },
+        "required": [
+          "on"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.routes",
+      "app": "call",
+      "title": "List call audio routes",
+      "description": "Audio devices the current call can use (earbuds, handset, speaker, car, wired) and which is current.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.route",
+      "app": "call",
+      "title": "Switch call audio",
+      "description": "Move the current call's audio: bluetooth, earpiece/handset, speaker, wired, a device name or a route id from call_routes.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "endpoint": {
+            "type": "string",
+            "description": "Route kind, device name or id",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "endpoint"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.recents",
+      "app": "call",
+      "title": "Read recent calls",
+      "description": "The user's recent calls from the phone's call log, newest first: name, kind (missed, in, out...), when, duration.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "How many (default 10)",
+            "minimum": 1,
+            "maximum": 25
+          },
+          "missed_only": {
+            "type": "boolean",
+            "description": "Only missed calls"
+          },
+          "reveal_numbers": {
+            "type": "boolean",
+            "description": "Full numbers; only when the user asked for a number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "call.state",
+      "app": "call",
+      "title": "Read phone call state",
+      "description": "Current phone calls (ringing, dialing, active, held), mute, audio route and which call permissions the phone has.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "reveal_numbers": {
+            "type": "boolean",
+            "description": "Full numbers; only when the user asked for a number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "timer.start",
+      "app": "timer",
+      "title": "Start a timer",
+      "description": "Start a countdown timer on the user's glasses; it rings on the phone and glasses.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "string",
+            "description": "Length, e.g. \"10m\", \"1h 30m\", \"90s\", \"10 minutes\"",
+            "maxLength": 60
+          },
+          "label": {
+            "type": "string",
+            "description": "Short name, e.g. \"Pasta\"",
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "duration"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "timer.list",
+      "app": "timer",
+      "title": "List timers",
+      "description": "Running and paused timers (glasses and phone clock) and anything ringing.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "timer.pause",
+      "app": "timer",
+      "title": "Pause a timer",
+      "description": "Pause a running timer.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Timer id or label from timer_list (default: the soonest)",
+            "maxLength": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "timer.resume",
+      "app": "timer",
+      "title": "Resume a timer",
+      "description": "Resume a paused timer.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Timer id or label from timer_list (default: the soonest)",
+            "maxLength": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "timer.cancel",
+      "app": "timer",
+      "title": "Cancel a timer",
+      "description": "Cancel a timer, or all timers with all=true.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Timer id or label from timer_list (default: the soonest)",
+            "maxLength": 100
+          },
+          "all": {
+            "type": "boolean",
+            "description": "Cancel every timer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "timer.add_time",
+      "app": "timer",
+      "title": "Add time to a timer",
+      "description": "Add (or with a leading minus remove) time from a timer, e.g. \"5m\" or \"-1m\".",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "string",
+            "description": "Time to add, e.g. \"5m\", \"30s\", \"-1m\"",
+            "maxLength": 60
+          },
+          "id": {
+            "type": "string",
+            "description": "Timer id or label from timer_list (default: the soonest)",
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "duration"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stopwatch.start",
+      "app": "stopwatch",
+      "title": "Start the stopwatch",
+      "description": "Start (or continue) the glasses stopwatch.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stopwatch.stop",
+      "app": "stopwatch",
+      "title": "Stop the stopwatch",
+      "description": "Stop the stopwatch, keeping its time and laps.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stopwatch.lap",
+      "app": "stopwatch",
+      "title": "Mark a lap",
+      "description": "Mark a lap on the running stopwatch.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stopwatch.reset",
+      "app": "stopwatch",
+      "title": "Reset the stopwatch",
+      "description": "Reset the stopwatch to 0 and clear its laps.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stopwatch.state",
+      "app": "stopwatch",
+      "title": "Read the stopwatch",
+      "description": "Stopwatch elapsed time, running state and laps.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.set",
+      "app": "alarm",
+      "title": "Set an alarm",
+      "description": "Set (or with id, edit) a glasses alarm. It rings on the phone and glasses.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "Local time, e.g. \"7:30 am\" or \"19:45\"",
+            "maxLength": 30
+          },
+          "days": {
+            "type": "string",
+            "description": "Repeat: \"once\" (default), \"daily\", \"weekdays\", \"weekends\" or days like \"mon wed fri\"",
+            "maxLength": 60
+          },
+          "label": {
+            "type": "string",
+            "description": "Short name",
+            "maxLength": 40
+          },
+          "id": {
+            "type": "string",
+            "description": "Alarm id to edit (from alarm_list)",
+            "maxLength": 20
+          }
+        },
+        "required": [
+          "time"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.list",
+      "app": "alarm",
+      "title": "List alarms",
+      "description": "Glasses alarms, the phone clock's next alarm and anything ringing.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.delete",
+      "app": "alarm",
+      "title": "Delete an alarm",
+      "description": "Delete a glasses alarm (id, time or label).",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Alarm id, time or label (see alarm_list)",
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.enable",
+      "app": "alarm",
+      "title": "Turn an alarm on or off",
+      "description": "Turn a glasses alarm on or off.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Alarm id, time or label",
+            "maxLength": 40
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "true = on (default), false = off"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.dismiss",
+      "app": "alarm",
+      "title": "Stop what is ringing",
+      "description": "Stop a ringing alarm or timer (default: everything ringing). For an alarm id that is not ringing, skips its next occurrence.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Ringing item or alarm id (optional)",
+            "maxLength": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.snooze",
+      "app": "alarm",
+      "title": "Snooze",
+      "description": "Snooze the ringing alarm (a ringing timer gets +1 min).",
+      "risk": "act",
+      "confirm": "never",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Ringing item id (optional)",
+            "maxLength": 100
+          },
+          "minutes": {
+            "type": "integer",
+            "description": "Snooze length (default: the user's setting, 9)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.phone_list",
+      "app": "alarm",
+      "title": "List phone clock alarms",
+      "description": "EXPERIMENTAL. The user's Google Clock alarms on the phone (time, label, days, on/off). Cached; refresh=true re-reads them by briefly opening Google Clock (phone must be unlocked).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 40000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "refresh": {
+            "type": "boolean",
+            "description": "Re-read from Google Clock now (default false: last read list)"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "alarm.phone_toggle",
+      "app": "alarm",
+      "title": "Switch a phone clock alarm",
+      "description": "EXPERIMENTAL. Turn one of the user's existing Google Clock alarms on or off by time (and label when several share a time). Briefly opens Google Clock on the unlocked phone and verifies the switch.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 45000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "Alarm time, e.g. \"6:30 am\"",
+            "maxLength": 30
+          },
+          "label": {
+            "type": "string",
+            "description": "Alarm label, when several alarms share the time",
+            "maxLength": 60
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "true = on, false = off (default: flip)"
+          }
+        },
+        "required": [
+          "time"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "people.recent",
+      "app": "people",
+      "title": "List recent people",
+      "description": "Known people the glasses heard in the last 10 minutes and recently seen people (where and when), with ids. heard is empty while passive listening is off.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "include_muted": {
+            "type": "boolean",
+            "description": "Also list muted people"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "people.lookup",
+      "app": "people",
+      "title": "Look up a person",
+      "description": "One known person's card: where and when last seen, and the user's notes about them (id or name).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "type": "string",
+            "description": "Person id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "person"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "people.mute",
+      "app": "people",
+      "title": "Mute a person",
+      "description": "Mute (or unmute) a person: muted people are not announced when heard and leave the recent list.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "type": "string",
+            "description": "Person id or name",
+            "maxLength": 200
+          },
+          "muted": {
+            "type": "boolean",
+            "description": "false to unmute (default true)"
+          }
+        },
+        "required": [
+          "person"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "people.open",
+      "app": "people",
+      "title": "Show a person's card",
+      "description": "Show one person's card (notes) on the glasses.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "type": "string",
+            "description": "Person id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "person"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "health.overview",
+      "app": "health",
+      "title": "Read health overview",
+      "description": "The user's latest health metrics (readiness, sleep, activity, HRV, resting heart rate, weight...): value, when measured and the breakdown rows.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "health.metric_history",
+      "app": "health",
+      "title": "Read a metric's history",
+      "description": "Daily values of one metric (key or name, or a breakdown row such as deep sleep) over the last N days, oldest first, with min, max and average.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "metric": {
+            "type": "string",
+            "description": "Metric key or name (see health_overview)",
+            "maxLength": 100
+          },
+          "days": {
+            "type": "integer",
+            "description": "Days (default 7)",
+            "minimum": 1,
+            "maximum": 90
+          }
+        },
+        "required": [
+          "metric"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "health.open_metric",
+      "app": "health",
+      "title": "Show a health chart",
+      "description": "Show one metric's chart on the glasses, 7 or 30 days.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "metric": {
+            "type": "string",
+            "description": "Metric key or name",
+            "maxLength": 100
+          },
+          "days": {
+            "type": "integer",
+            "description": "7 (default) or 30",
+            "minimum": 7,
+            "maximum": 30
+          }
+        },
+        "required": [
+          "metric"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "calendar.agenda",
+      "app": "calendar",
+      "title": "Read the agenda",
+      "description": "The user's calendar for the next N days (today first): each day's date and events with time, title, location and whether all-day. Multi-day events list on each day.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "days": {
+            "type": "integer",
+            "description": "Days including today (default 3)",
+            "minimum": 1,
+            "maximum": 14
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "calendar.open_day",
+      "app": "calendar",
+      "title": "Show a calendar day",
+      "description": "Open the glasses calendar with the cursor on one day's first event (today, tomorrow, a weekday or YYYY-MM-DD).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "description": "today, tomorrow, a weekday (friday) or YYYY-MM-DD",
+            "maxLength": 20
+          }
+        },
+        "required": [
+          "day"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "report.latest",
+      "app": "report",
+      "title": "Read the morning report",
+      "description": "The latest morning report on the glasses: its date, whether it is today's or stale, and every card (type, heading, body).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "report.open",
+      "app": "report",
+      "title": "Open the morning report",
+      "description": "Open the morning report on the glasses, at the first card or at one card (heading or type, e.g. weather, calendar, news).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "card": {
+            "type": "string",
+            "description": "Card heading or type (optional)",
+            "maxLength": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "ha.panel",
+      "app": "ha",
+      "title": "Read Home Assistant",
+      "description": "The user's Home Assistant panel: scenes (id, name), the wake-up alarm (time, style) and 3D printers (state, progress, time left, detail).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "ha.run_scene",
+      "app": "ha",
+      "title": "Run a Home Assistant scene",
+      "description": "Run one Home Assistant scene (id or name from ha_panel), e.g. lights for guests or going to sleep.",
+      "risk": "physical",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "scene": {
+            "type": "string",
+            "description": "Scene id or name",
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "scene"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "ha.set_alarm",
+      "app": "ha",
+      "title": "Set the wake-up alarm",
+      "description": "Set the user's Home Assistant wake-up alarm time (\"7:00 AM\") and/or style (Gentle or Harsh).",
+      "risk": "physical",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "Time like 7:00 AM",
+            "maxLength": 8
+          },
+          "style": {
+            "type": "string",
+            "description": "Gentle or Harsh",
+            "enum": [
+              "Gentle",
+              "Harsh"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "docs.list",
+      "app": "docs",
+      "title": "List glasses docs",
+      "description": "Documents in the glasses Docs app, newest first: id, title, created time and length.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "docs.read",
+      "app": "docs",
+      "title": "Read a glasses doc",
+      "description": "The text of one document (id or title).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "doc": {
+            "type": "string",
+            "description": "Document id or title",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "doc"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "docs.open",
+      "app": "docs",
+      "title": "Open a glasses doc",
+      "description": "Open one document in the glasses reader (first page) so the user can read it.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "doc": {
+            "type": "string",
+            "description": "Document id or title",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "doc"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "docs.scroll",
+      "app": "docs",
+      "title": "Page the open doc",
+      "description": "Turn pages in the document open on the glasses (positive = forward, negative = back).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pages": {
+            "type": "integer",
+            "description": "Pages to move, e.g. 1 or -1",
+            "minimum": -50,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "pages"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "memo.list",
+      "app": "memo",
+      "title": "List voice memos",
+      "description": "Whether a voice memo is recording (and for how long) plus recent memos: id, title, time, length and upload/transcription state.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "How many (default 10)",
+            "minimum": 1,
+            "maximum": 25
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "memo.read",
+      "app": "memo",
+      "title": "Read a voice memo",
+      "description": "One memo's transcript (id or title from memo_list). Empty until the gateway has transcribed it.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memo": {
+            "type": "string",
+            "description": "Memo id or title",
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "memo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "memo.start",
+      "app": "memo",
+      "title": "Start a voice memo",
+      "description": "Start recording a voice memo with the glasses microphone (as tapping L on the memo screen). Stop it with memo_stop.",
+      "risk": "call",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "memo.stop",
+      "app": "memo",
+      "title": "Stop the voice memo",
+      "description": "Stop the voice memo that is recording; it is saved and sent for transcription.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "memo.toggle",
+      "app": "memo",
+      "title": "Start or stop a voice memo",
+      "description": "Start a voice memo, or stop the one recording (the memo shortcut).",
+      "risk": "call",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "teleprompter.read_script",
+      "app": "teleprompter",
+      "title": "Read the teleprompter script",
+      "description": "The teleprompter script text, and whether the teleprompter is open and auto-scrolling.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "teleprompter.open",
+      "app": "teleprompter",
+      "title": "Open the teleprompter",
+      "description": "Open the teleprompter at the top of the script, paused.",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "teleprompter.start",
+      "app": "teleprompter",
+      "title": "Start the teleprompter",
+      "description": "Open the teleprompter (if needed) and start auto-scrolling the script; the display stays lit while it scrolls.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "teleprompter.stop",
+      "app": "teleprompter",
+      "title": "Pause the teleprompter",
+      "description": "Pause teleprompter auto-scrolling (the script stays where it is).",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "teleprompter.scroll",
+      "app": "teleprompter",
+      "title": "Scroll the teleprompter",
+      "description": "Move the open teleprompter script by lines (negative = back).",
+      "risk": "navigate",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lines": {
+            "type": "integer",
+            "description": "Lines to move, e.g. 3 or -3",
+            "minimum": -200,
+            "maximum": 200
+          }
+        },
+        "required": [
+          "lines"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "status.read",
+      "app": "status",
+      "title": "Read glasses status",
+      "description": "Battery levels (glasses, earbuds by name, Oura, phone), Wi-Fi, cell signal, glasses link and brightness, as on the Status screen.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "status.list_bluetooth_devices",
+      "app": "status",
+      "title": "List Bluetooth devices",
+      "description": "Paired Bluetooth devices with kind, whether connected, battery, and the Status screen setting (auto, show, hide).",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "status.set_bluetooth_device",
+      "app": "status",
+      "title": "Choose a Status device",
+      "description": "Show or hide one Bluetooth device's battery on the Status screen; auto shows earbuds and headphones only.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "type": "string",
+            "description": "Device name or address (see status_list_bluetooth_devices)",
+            "maxLength": 100
+          },
+          "status_screen": {
+            "type": "string",
+            "description": "auto, show or hide",
+            "enum": [
+              "auto",
+              "show",
+              "hide"
+            ]
+          }
+        },
+        "required": [
+          "device",
+          "status_screen"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "settings.read",
+      "app": "settings",
+      "title": "Read glasses settings",
+      "description": "Display & sleep (sleep after, dim, first press, Home after lock, popups when locked, look-up wake, dark mode), head gestures, display position, brightness and app order.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "settings.set_display_power",
+      "app": "settings",
+      "title": "Change display & sleep",
+      "description": "Set any of: sleep_after_s (display timeout, 0 = never), dim_first, first_press_acts, home_after_lock_s (0 = off), popups, popup_s, popups_when_locked, look_up (ON/OFF/TOGGLE/NOTHING), look_up_when_locked, text_case, memo_keeps_lit, joy_call_layout, dark_mode.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sleep_after_s": {
+            "type": "integer",
+            "description": "Idle seconds before the lens goes dark: 0 (never), 5, 10, 12, 15, 20, 30 or 60",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "dim_first": {
+            "type": "boolean",
+            "description": "One dim frame before black"
+          },
+          "first_press_acts": {
+            "type": "boolean",
+            "description": "A press that wakes the lens also acts"
+          },
+          "home_after_lock_s": {
+            "type": "integer",
+            "description": "Unlocking after this long opens Home: 0 (off), 30, 60 or 300",
+            "minimum": 0,
+            "maximum": 300
+          },
+          "popups_when_locked": {
+            "type": "boolean",
+            "description": "Important popups light a locked lens"
+          },
+          "wake_on_look_up": {
+            "type": "boolean",
+            "description": "Old switch: true = look_up ON, false = NOTHING"
+          },
+          "look_up": {
+            "type": "string",
+            "description": "What looking up does",
+            "enum": [
+              "ON",
+              "OFF",
+              "TOGGLE",
+              "NOTHING"
+            ]
+          },
+          "look_up_when_locked": {
+            "type": "boolean",
+            "description": "Looking up also acts while the glasses are locked"
+          },
+          "text_case": {
+            "type": "string",
+            "description": "Glasses text: CAPS (all caps) or NORMAL",
+            "enum": [
+              "CAPS",
+              "NORMAL"
+            ]
+          },
+          "popups": {
+            "type": "boolean",
+            "description": "Important notifications pop up and light the lens"
+          },
+          "popup_s": {
+            "type": "integer",
+            "description": "Seconds a popup stays up: 4, 6, 8, 10 or 15",
+            "minimum": 4,
+            "maximum": 15
+          },
+          "memo_keeps_lit": {
+            "type": "boolean",
+            "description": "A recording memo keeps the lens lit"
+          },
+          "joy_call_layout": {
+            "type": "string",
+            "description": "Assistant voice call screen",
+            "enum": [
+              "compact",
+              "full"
+            ]
+          },
+          "dark_mode": {
+            "type": "string",
+            "description": "How the lens goes dark",
+            "enum": [
+              "auto",
+              "black",
+              "park"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "settings.set_head_gestures",
+      "app": "settings",
+      "title": "Change head gestures",
+      "description": "Set the glasses' look-up wake angle (10 to 70 degrees), nod/shake answers, and which gesture confirms.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "look_up_angle": {
+            "type": "integer",
+            "description": "Look-up angle in degrees, 10 to 70 in steps of 5",
+            "minimum": 10,
+            "maximum": 70
+          },
+          "nod_shake": {
+            "type": "boolean",
+            "description": "Answer stock cards with nod/shake"
+          },
+          "confirm_with": {
+            "type": "string",
+            "description": "Which gesture means yes",
+            "enum": [
+              "nod",
+              "shake"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "settings.set_display_position",
+      "app": "settings",
+      "title": "Change display position",
+      "description": "Set where the image sits (height high, middle or low) and its depth (distance near or far) on the glasses.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 15000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "height": {
+            "type": "string",
+            "description": "Image height",
+            "enum": [
+              "high",
+              "middle",
+              "low"
+            ]
+          },
+          "distance": {
+            "type": "string",
+            "description": "Image depth",
+            "enum": [
+              "near",
+              "far"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "shortcuts.list",
+      "app": "shortcuts",
+      "title": "List controller shortcuts",
+      "description": "Each assignable controller gesture (id, label), its assigned app action, the actions it can take, and the apps that keep that button for themselves.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "shortcuts.assign",
+      "app": "shortcuts",
+      "title": "Assign a controller shortcut",
+      "description": "Give a controller gesture (e.g. l2.hold) an app action id or label from shortcuts_list, or action \"none\" to clear it.",
+      "risk": "act",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "gesture": {
+            "type": "string",
+            "description": "Gesture id or label, e.g. l2.hold or Hold L2",
+            "maxLength": 40
+          },
+          "action": {
+            "type": "string",
+            "description": "Action id or label (e.g. memo.toggle), or none",
+            "maxLength": 60
+          }
+        },
+        "required": [
+          "gesture",
+          "action"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "lifelog.status",
+      "app": "lifelog",
+      "title": "Read lifelog capture status",
+      "description": "Whether passive listening (ambient conversation capture and voice matching) is on, and today's capture state, recorded time and conversations.",
+      "risk": "read",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "lifelog.pause",
+      "app": "lifelog",
+      "title": "Pause passive listening",
+      "description": "Stop ambient capture and voice matching now (the minus-hold switch). Dictation, memos and calls still work.",
+      "risk": "act",
+      "confirm": "never",
+      "tool": true,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "lifelog.resume",
+      "app": "lifelog",
+      "title": "Resume passive listening",
+      "description": "Turn passive listening back on (ambient capture and voice matching).",
+      "risk": "call",
+      "confirm": "policy",
+      "tool": false,
+      "timeoutMs": 10000,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    }
+  ]
+}

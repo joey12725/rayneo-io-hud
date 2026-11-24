@@ -1,0 +1,7 @@
+Deploy event-scraper v2   
+Run command               
+docker compose -f prod.yml
+up -d --build scraper     
+ Approve for this thread ^
+>Deny                     
+<> read all B back     1/3

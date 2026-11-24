@@ -1,0 +1,159 @@
+{
+  "$comment": "Notification policy for the glasses (lib/notify-policy.mjs, mirrored on the phone). Copy this file, change it and point notify.policyFile / NOTIFY_POLICY_FILE at the copy. Unknown keys are refused.",
+  "schema": 1,
+  "kinds": {
+    "beeper": true,
+    "t3": true,
+    "hermes": true,
+    "assistant": true,
+    "call": true,
+    "calendar": true,
+    "clock": true
+  },
+  "packages": {
+    "beeper": [
+      "com.beeper.android"
+    ],
+    "t3": [
+      "com.t3tools.t3code"
+    ],
+    "dialer": [
+      "com.google.android.dialer",
+      "com.android.dialer",
+      "com.samsung.android.dialer",
+      "com.android.server.telecom"
+    ]
+  },
+  "apps": {},
+  "deny": {
+    "messaging": [
+      "com.google.android.apps.messaging",
+      "com.whatsapp",
+      "org.telegram.messenger",
+      "org.thoughtcrime.securesms",
+      "com.discord",
+      "com.facebook.orca",
+      "com.instagram.android",
+      "com.snapchat.android",
+      "com.Slack",
+      "com.samsung.android.messaging",
+      "com.textra"
+    ],
+    "email": [
+      "com.google.android.gm",
+      "com.microsoft.office.outlook",
+      "com.superhuman.mail",
+      "ch.protonmail.android"
+    ],
+    "media": [
+      "com.google.android.youtube",
+      "com.spotify.music",
+      "com.google.android.apps.youtube.music"
+    ],
+    "home": [
+      "io.homeassistant.companion.android",
+      "io.homeassistant.companion.android.minimal"
+    ],
+    "assistant": [
+      "com.openai.chatgpt",
+      "com.anthropic.claude",
+      "ai.perplexity.app.android"
+    ]
+  },
+  "beeperNoticeChannels": [
+    "APP_NOTICES",
+    "IMPORTANT_NOTICES",
+    "BRIDGE_DISCONNECT_NOTICES",
+    "DOWNLOADS",
+    "MEDIA_PLAYBACK",
+    "REMINDERS",
+    "URGENT",
+    "SILENT_NOTIFICATION_CHANNEL_ID"
+  ],
+  "t3LongRunMinutes": 5,
+  "dating": {
+    "enabled": false,
+    "apps": {
+      "com.tinder": {
+        "match": [
+          "MATCHES"
+        ],
+        "like": [
+          "NEW_LIKES",
+          "SUPER_LIKES"
+        ],
+        "message": [
+          "MESSAGES"
+        ],
+        "deny": [
+          "MESSAGE_LIKES",
+          "TOP_PICKS"
+        ]
+      },
+      "co.hinge.app": {
+        "match": [
+          "matches"
+        ],
+        "like": [
+          "likes"
+        ],
+        "message": [
+          "messages"
+        ],
+        "deny": [
+          "announcements",
+          "promotions"
+        ]
+      },
+      "com.bumble.app": {
+        "match": [
+          "matches"
+        ],
+        "like": [
+          "liked_you"
+        ],
+        "message": [
+          "messages"
+        ],
+        "deny": [
+          "expiring",
+          "survey",
+          "event",
+          "profile_tip",
+          "goodstuff",
+          "_system_",
+          "_other_",
+          "video_calls"
+        ]
+      },
+      "co.feeld": {
+        "match": [
+          "new-match"
+        ],
+        "like": [],
+        "message": [
+          "chat-messages"
+        ],
+        "deny": [
+          "PROACTIVE_MESSAGING_NOTIFICATION_CHANNEL_ID"
+        ]
+      },
+      "com.okcupid.okcupid": {},
+      "com.grindrapp.android": {},
+      "com.match.android.matchmobile": {},
+      "com.pof.android": {},
+      "com.coffeemeetsbagel": {},
+      "com.ftw_and_co.happn": {},
+      "com.badoo.mobile": {},
+      "com.hily.app": {},
+      "com.raya.raya": {},
+      "com.her.android": {},
+      "com.takimi.android": {
+        "match": [],
+        "like": [],
+        "message": [],
+        "deny": []
+      }
+    }
+  }
+}

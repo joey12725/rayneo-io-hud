@@ -1,0 +1,10 @@
+{
+  "$comment": "People screen source (people.file / PEOPLE_FILE). Every name here is fictional. `voices` are speaker embeddings for on-phone recognition (`dim` floats, or base64 of little-endian float32) from the model named in `model`; people without voices still show in the recent list when `seenAt` is set. `me: true` marks the owner's own voice (never shown as heard).",
+  "model": "wespeaker-voxceleb-resnet34-LM",
+  "dim": 256,
+  "people": [
+    { "id": "robin", "name": "Robin Sample", "notes": "Neighbour. Lends books.", "where": "Bookshop", "seenAt": "2026-01-10T15:00:00Z" },
+    { "id": "alex", "name": "Alex Example", "notes": "Met at the climbing gym.", "voices": [] },
+    { "id": "me", "name": "Me", "me": true, "voices": [] }
+  ]
+}

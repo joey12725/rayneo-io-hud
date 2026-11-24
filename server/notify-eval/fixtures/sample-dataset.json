@@ -1,0 +1,346 @@
+{
+ "schema": 1,
+ "kind": "sample",
+ "note": "Wholly synthetic cases for tests and demos. Names are fictional.",
+ "builtAt": "2026-11-17T00:00:00.000Z",
+ "cases": [
+  {
+   "id": "beeper:sample-dm-plan",
+   "kind": "beeper",
+   "synthetic": true,
+   "input": {
+    "kind": "beeper",
+    "source": "com.beeper.android",
+    "app": "Beeper",
+    "title": "Riley Chen",
+    "body": "dinner at 7 tomorrow? I can pick you up",
+    "conversationTitle": "",
+    "sender": "Riley Chen",
+    "network": "Instagram",
+    "isGroup": false,
+    "chatId": "sample-chat-1"
+   },
+   "expected": "popup",
+   "why": "1:1 message makes plans",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "context": {
+    "chatName": "Riley Chen",
+    "network": "Instagram",
+    "isGroup": false,
+    "previous": [
+     {
+      "sender": "You",
+      "mine": true,
+      "text": "free this week?",
+      "at": "2026-11-01T17:00:00Z"
+     }
+    ]
+   },
+   "signals": {
+    "repliedAfterSec": 120,
+    "question": true,
+    "plans": true
+   }
+  },
+  {
+   "id": "beeper:sample-dm-chat",
+   "kind": "beeper",
+   "synthetic": true,
+   "input": {
+    "kind": "beeper",
+    "source": "com.beeper.android",
+    "app": "Beeper",
+    "title": "Riley Chen",
+    "body": "that movie was so good, the ending though",
+    "sender": "Riley Chen",
+    "network": "Instagram",
+    "isGroup": false
+   },
+   "expected": "stream",
+   "why": "1:1 conversation worth reading later",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "signals": {
+    "repliedAfterSec": 3600
+   }
+  },
+  {
+   "id": "beeper:sample-group-lol",
+   "kind": "beeper",
+   "synthetic": true,
+   "input": {
+    "kind": "beeper",
+    "source": "com.beeper.android",
+    "app": "Beeper",
+    "title": "Climbing crew",
+    "body": "lmao",
+    "conversationTitle": "Climbing crew",
+    "sender": "Pat",
+    "network": "Discord",
+    "isGroup": true
+   },
+   "expected": "suppress",
+   "why": "group banter not addressed to the owner",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "signals": {
+    "banter": true
+   }
+  },
+  {
+   "id": "beeper:sample-group-owner",
+   "kind": "beeper",
+   "synthetic": true,
+   "input": {
+    "kind": "beeper",
+    "source": "com.beeper.android",
+    "app": "Beeper",
+    "title": "Climbing crew",
+    "body": "owner are you driving saturday?",
+    "conversationTitle": "Climbing crew",
+    "sender": "Pat",
+    "network": "Discord",
+    "isGroup": true
+   },
+   "expected": "popup",
+   "why": "group message names the owner",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "signals": {
+    "addressed": true,
+    "question": true
+   }
+  },
+  {
+   "id": "beeper:sample-reel",
+   "kind": "beeper",
+   "synthetic": true,
+   "input": {
+    "kind": "beeper",
+    "source": "com.beeper.android",
+    "app": "Beeper",
+    "title": "Sam",
+    "body": "https://www.instagram.com/reel/EXAMPLE/",
+    "sender": "Sam",
+    "network": "Instagram",
+    "isGroup": false
+   },
+   "expected": "suppress",
+   "why": "bare link or Reel share",
+   "ambiguous": true,
+   "labelSource": "heuristic",
+   "signals": {
+    "share": true
+   }
+  },
+  {
+   "id": "beeper:sample-otp",
+   "kind": "beeper",
+   "synthetic": true,
+   "input": {
+    "kind": "beeper",
+    "source": "com.beeper.android",
+    "app": "Beeper",
+    "title": "12345",
+    "body": "Your verification code is 000000",
+    "sender": "12345",
+    "network": "Google Messages",
+    "isGroup": false
+   },
+   "expected": "suppress",
+   "why": "one-time code",
+   "ambiguous": true,
+   "labelSource": "heuristic",
+   "signals": {
+    "otp": true
+   }
+  },
+  {
+   "id": "t3:sample-needs-input",
+   "kind": "t3",
+   "synthetic": true,
+   "input": {
+    "kind": "t3",
+    "source": "t3:desktop",
+    "app": "T3 Code",
+    "title": "Refactor parser",
+    "conversationTitle": "demo-project",
+    "body": "I found two ways to fix this. Should I keep the old API or break it?",
+    "category": "needs-input"
+   },
+   "expected": "popup",
+   "why": "the agent asked the owner for input",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "signals": {
+    "status": "completed",
+    "durationSec": 420,
+    "pendingInput": true,
+    "nextUserAfterSec": 900
+   }
+  },
+  {
+   "id": "t3:sample-quick",
+   "kind": "t3",
+   "synthetic": true,
+   "input": {
+    "kind": "t3",
+    "source": "t3:desktop",
+    "app": "T3 Code",
+    "title": "Quick question",
+    "conversationTitle": "demo-project",
+    "body": "The function lives in src/util.js.",
+    "category": "done"
+   },
+   "expected": "suppress",
+   "why": "routine quick reply while the owner was watching",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "signals": {
+    "status": "completed",
+    "durationSec": 12,
+    "pendingInput": false,
+    "nextUserAfterSec": 30
+   }
+  },
+  {
+   "id": "t3:sample-long",
+   "kind": "t3",
+   "synthetic": true,
+   "input": {
+    "kind": "t3",
+    "source": "t3:desktop",
+    "app": "T3 Code",
+    "title": "Big migration",
+    "conversationTitle": "demo-project",
+    "body": "Done: migrated 40 files, all tests pass.",
+    "category": "done"
+   },
+   "expected": "popup",
+   "why": "long job finished (35 min)",
+   "ambiguous": false,
+   "labelSource": "llm",
+   "labels": {
+    "heuristic": {
+     "expected": "popup",
+     "why": "long job finished (35 min)",
+     "ambiguous": false
+    },
+    "llm": {
+     "expected": "stream",
+     "why": "completion, can wait",
+     "ambiguous": true,
+     "model": "example-model"
+    }
+   },
+   "signals": {
+    "status": "completed",
+    "durationSec": 2100,
+    "nextUserAfterSec": null
+   }
+  },
+  {
+   "id": "call:syn-spam-failed",
+   "kind": "call",
+   "synthetic": true,
+   "input": {
+    "kind": "call",
+    "source": "com.google.android.dialer",
+    "app": "Phone",
+    "title": "Suspected spam caller",
+    "body": "Incoming call",
+    "category": "call",
+    "contact": {
+     "known": false
+    },
+    "callerVerified": "failed"
+   },
+   "expected": "suppress",
+   "why": "spam-likely caller whose number failed verification",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "bucket": "not",
+   "context": {
+    "role": "spam"
+   }
+  },
+  {
+   "id": "call:syn-spam-none",
+   "kind": "call",
+   "synthetic": true,
+   "input": {
+    "kind": "call",
+    "source": "com.google.android.dialer",
+    "app": "Phone",
+    "title": "Spam likely",
+    "body": "Incoming call",
+    "category": "call",
+    "contact": {
+     "known": false
+    },
+    "callerVerified": "none"
+   },
+   "expected": "suppress",
+   "why": "dialer flags the caller as spam",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "bucket": "not",
+   "context": {
+    "role": "spam"
+   }
+  },
+  {
+   "id": "call:syn-unknown-passed",
+   "kind": "call",
+   "synthetic": true,
+   "input": {
+    "kind": "call",
+    "source": "com.google.android.dialer",
+    "app": "Phone",
+    "title": "Unknown caller",
+    "body": "Incoming call",
+    "category": "call",
+    "contact": {
+     "known": false
+    },
+    "callerVerified": "passed"
+   },
+   "expected": "suppress",
+   "why": "unknown caller (verified number, but not a contact): policy suppresses unknown callers",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "bucket": "not",
+   "context": {
+    "role": "unknown"
+   }
+  },
+  {
+   "id": "call:sample-contact",
+   "kind": "call",
+   "synthetic": true,
+   "input": {
+    "kind": "call",
+    "source": "com.google.android.dialer",
+    "app": "Phone",
+    "title": "Alex Rivera",
+    "body": "Incoming call",
+    "category": "call",
+    "sender": "Alex Rivera",
+    "contact": {
+     "known": true,
+     "starred": true,
+     "name": "Alex Rivera"
+    },
+    "callerVerified": "passed"
+   },
+   "expected": "popup",
+   "why": "starred contact",
+   "ambiguous": false,
+   "labelSource": "heuristic",
+   "context": {
+    "role": "friend"
+   }
+  }
+ ]
+}

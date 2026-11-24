@@ -1,0 +1,1867 @@
+{
+  "FONT5": {
+    "0": [
+      "01110",
+      "10001",
+      "10011",
+      "10101",
+      "11001",
+      "10001",
+      "01110"
+    ],
+    "1": [
+      "00100",
+      "01100",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "01110"
+    ],
+    "2": [
+      "01110",
+      "10001",
+      "00001",
+      "00010",
+      "00100",
+      "01000",
+      "11111"
+    ],
+    "3": [
+      "11110",
+      "00001",
+      "00001",
+      "01110",
+      "00001",
+      "00001",
+      "11110"
+    ],
+    "4": [
+      "00010",
+      "00110",
+      "01010",
+      "10010",
+      "11111",
+      "00010",
+      "00010"
+    ],
+    "5": [
+      "11111",
+      "10000",
+      "10000",
+      "11110",
+      "00001",
+      "00001",
+      "11110"
+    ],
+    "6": [
+      "01110",
+      "10000",
+      "10000",
+      "11110",
+      "10001",
+      "10001",
+      "01110"
+    ],
+    "7": [
+      "11111",
+      "00001",
+      "00010",
+      "00100",
+      "01000",
+      "01000",
+      "01000"
+    ],
+    "8": [
+      "01110",
+      "10001",
+      "10001",
+      "01110",
+      "10001",
+      "10001",
+      "01110"
+    ],
+    "9": [
+      "01110",
+      "10001",
+      "10001",
+      "01111",
+      "00001",
+      "00001",
+      "01110"
+    ],
+    "A": [
+      "01110",
+      "10001",
+      "10001",
+      "11111",
+      "10001",
+      "10001",
+      "10001"
+    ],
+    "B": [
+      "11110",
+      "10001",
+      "10001",
+      "11110",
+      "10001",
+      "10001",
+      "11110"
+    ],
+    "C": [
+      "01111",
+      "10000",
+      "10000",
+      "10000",
+      "10000",
+      "10000",
+      "01111"
+    ],
+    "D": [
+      "11110",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "11110"
+    ],
+    "E": [
+      "11111",
+      "10000",
+      "10000",
+      "11110",
+      "10000",
+      "10000",
+      "11111"
+    ],
+    "F": [
+      "11111",
+      "10000",
+      "10000",
+      "11110",
+      "10000",
+      "10000",
+      "10000"
+    ],
+    "G": [
+      "01111",
+      "10000",
+      "10000",
+      "10111",
+      "10001",
+      "10001",
+      "01111"
+    ],
+    "H": [
+      "10001",
+      "10001",
+      "10001",
+      "11111",
+      "10001",
+      "10001",
+      "10001"
+    ],
+    "I": [
+      "11111",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "11111"
+    ],
+    "J": [
+      "00111",
+      "00010",
+      "00010",
+      "00010",
+      "10010",
+      "10010",
+      "01100"
+    ],
+    "K": [
+      "10001",
+      "10010",
+      "10100",
+      "11000",
+      "10100",
+      "10010",
+      "10001"
+    ],
+    "L": [
+      "10000",
+      "10000",
+      "10000",
+      "10000",
+      "10000",
+      "10000",
+      "11111"
+    ],
+    "M": [
+      "10001",
+      "11011",
+      "10101",
+      "10101",
+      "10001",
+      "10001",
+      "10001"
+    ],
+    "N": [
+      "10001",
+      "11001",
+      "11001",
+      "10101",
+      "10011",
+      "10011",
+      "10001"
+    ],
+    "O": [
+      "01110",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "01110"
+    ],
+    "P": [
+      "11110",
+      "10001",
+      "10001",
+      "11110",
+      "10000",
+      "10000",
+      "10000"
+    ],
+    "Q": [
+      "01110",
+      "10001",
+      "10001",
+      "10001",
+      "10101",
+      "10010",
+      "01101"
+    ],
+    "R": [
+      "11110",
+      "10001",
+      "10001",
+      "11110",
+      "10100",
+      "10010",
+      "10001"
+    ],
+    "S": [
+      "01111",
+      "10000",
+      "10000",
+      "01110",
+      "00001",
+      "00001",
+      "11110"
+    ],
+    "T": [
+      "11111",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100"
+    ],
+    "U": [
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "01110"
+    ],
+    "V": [
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "10001",
+      "01010",
+      "00100"
+    ],
+    "W": [
+      "10001",
+      "10001",
+      "10001",
+      "10101",
+      "10101",
+      "10101",
+      "01010"
+    ],
+    "X": [
+      "10001",
+      "10001",
+      "01010",
+      "00100",
+      "01010",
+      "10001",
+      "10001"
+    ],
+    "Y": [
+      "10001",
+      "10001",
+      "01010",
+      "00100",
+      "00100",
+      "00100",
+      "00100"
+    ],
+    "Z": [
+      "11111",
+      "00001",
+      "00010",
+      "00100",
+      "01000",
+      "10000",
+      "11111"
+    ],
+    ".": [
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00110",
+      "00110"
+    ],
+    ",": [
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00110",
+      "00100",
+      "01000"
+    ],
+    ":": [
+      "00000",
+      "00110",
+      "00110",
+      "00000",
+      "00110",
+      "00110",
+      "00000"
+    ],
+    ";": [
+      "00000",
+      "00110",
+      "00110",
+      "00000",
+      "00110",
+      "00100",
+      "01000"
+    ],
+    "!": [
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00000",
+      "00100"
+    ],
+    "?": [
+      "01110",
+      "10001",
+      "00001",
+      "00010",
+      "00100",
+      "00000",
+      "00100"
+    ],
+    "'": [
+      "00100",
+      "00100",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000"
+    ],
+    "\"": [
+      "01010",
+      "01010",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000"
+    ],
+    "-": [
+      "00000",
+      "00000",
+      "00000",
+      "11111",
+      "00000",
+      "00000",
+      "00000"
+    ],
+    "_": [
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "11111"
+    ],
+    "/": [
+      "00001",
+      "00010",
+      "00010",
+      "00100",
+      "01000",
+      "01000",
+      "10000"
+    ],
+    "<": [
+      "00010",
+      "00100",
+      "01000",
+      "10000",
+      "01000",
+      "00100",
+      "00010"
+    ],
+    ">": [
+      "01000",
+      "00100",
+      "00010",
+      "00001",
+      "00010",
+      "00100",
+      "01000"
+    ],
+    "(": [
+      "00010",
+      "00100",
+      "01000",
+      "01000",
+      "01000",
+      "00100",
+      "00010"
+    ],
+    ")": [
+      "01000",
+      "00100",
+      "00010",
+      "00010",
+      "00010",
+      "00100",
+      "01000"
+    ],
+    "[": [
+      "01110",
+      "01000",
+      "01000",
+      "01000",
+      "01000",
+      "01000",
+      "01110"
+    ],
+    "]": [
+      "01110",
+      "00010",
+      "00010",
+      "00010",
+      "00010",
+      "00010",
+      "01110"
+    ],
+    "+": [
+      "00000",
+      "00100",
+      "00100",
+      "11111",
+      "00100",
+      "00100",
+      "00000"
+    ],
+    "=": [
+      "00000",
+      "00000",
+      "11111",
+      "00000",
+      "11111",
+      "00000",
+      "00000"
+    ],
+    "*": [
+      "00000",
+      "10101",
+      "01110",
+      "11111",
+      "01110",
+      "10101",
+      "00000"
+    ],
+    "#": [
+      "01010",
+      "01010",
+      "11111",
+      "01010",
+      "11111",
+      "01010",
+      "01010"
+    ],
+    "%": [
+      "11001",
+      "11010",
+      "00100",
+      "01000",
+      "10110",
+      "00110",
+      "00000"
+    ],
+    "&": [
+      "01100",
+      "10010",
+      "10100",
+      "01000",
+      "10101",
+      "10010",
+      "01101"
+    ],
+    "@": [
+      "01110",
+      "10001",
+      "10111",
+      "10101",
+      "10111",
+      "10000",
+      "01110"
+    ],
+    "|": [
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100",
+      "00100"
+    ],
+    "°": [
+      "01100",
+      "10010",
+      "10010",
+      "01100",
+      "00000",
+      "00000",
+      "00000"
+    ],
+    "×": [
+      "00000",
+      "10001",
+      "01010",
+      "00100",
+      "01010",
+      "10001",
+      "00000"
+    ],
+    "·": [
+      "00000",
+      "00000",
+      "00000",
+      "00100",
+      "00000",
+      "00000",
+      "00000"
+    ],
+    "●": [
+      "00000",
+      "01110",
+      "11111",
+      "11111",
+      "11111",
+      "01110",
+      "00000"
+    ],
+    "◀": [
+      "00010",
+      "00110",
+      "01110",
+      "11110",
+      "01110",
+      "00110",
+      "00010"
+    ],
+    "▶": [
+      "01000",
+      "01100",
+      "01110",
+      "01111",
+      "01110",
+      "01100",
+      "01000"
+    ],
+    "▲": [
+      "00000",
+      "00100",
+      "01110",
+      "11111",
+      "00000",
+      "00000",
+      "00000"
+    ],
+    "▼": [
+      "00000",
+      "00000",
+      "11111",
+      "01110",
+      "00100",
+      "00000",
+      "00000"
+    ],
+    " ": [
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000",
+      "00000"
+    ]
+  },
+  "FONTS": {
+    "repo": {
+      "bitmap": true,
+      "sc": {
+        "s": 2,
+        "m": 2,
+        "l": 3,
+        "xl": 7
+      },
+      "lh": {
+        "s": 18,
+        "m": 18,
+        "l": 27,
+        "xl": 56
+      }
+    },
+    "vt": {
+      "fam": "VT323",
+      "w": 400,
+      "px": {
+        "s": 20,
+        "m": 22,
+        "l": 32,
+        "xl": 76
+      },
+      "lh": {
+        "s": 18,
+        "m": 21,
+        "l": 30,
+        "xl": 62
+      }
+    },
+    "pix": {
+      "fam": "Pixelify Sans",
+      "w": 500,
+      "px": {
+        "s": 15,
+        "m": 17,
+        "l": 27,
+        "xl": 62
+      },
+      "lh": {
+        "s": 18,
+        "m": 21,
+        "l": 31,
+        "xl": 66
+      }
+    },
+    "inter": {
+      "fam": "Inter",
+      "w": 600,
+      "px": {
+        "s": 14,
+        "m": 16,
+        "l": 26,
+        "xl": 60
+      },
+      "lh": {
+        "s": 18,
+        "m": 21,
+        "l": 31,
+        "xl": 64
+      }
+    }
+  },
+  "S": {
+    "locked": false,
+    "bright": 8,
+    "layer": null,
+    "layerUsed": false,
+    "flash": null,
+    "notifs": [],
+    "memo": {
+      "rec": false,
+      "t0": 0,
+      "list": [
+        {
+          "title": "Ideas for the morning report",
+          "at": "2:14 PM",
+          "dur": "0:41",
+          "upload": "delivered"
+        },
+        {
+          "title": "Grocery list and Saturday plan",
+          "at": "11:02 AM",
+          "dur": "1:58",
+          "upload": "delivered"
+        }
+      ]
+    },
+    "ha": {
+      "alarm": "7:00 AM",
+      "style": "Gentle"
+    }
+  },
+  "joy": {
+    "status": "idle",
+    "anim": 44,
+    "since": 0,
+    "out": "Morning. You have standup at 8 tonight, two T3 threads waiting on you, and Sam wants to know if you're coming out. Want me to draft a reply?",
+    "page": 0,
+    "prompt": null,
+    "turn": 0
+  },
+  "chats": [
+    {
+      "name": "Sam",
+      "net": "iMessage",
+      "unread": 3,
+      "msgs": [
+        {
+          "from": "Sam",
+          "at": "7:41 PM",
+          "t": "you coming tonight?",
+          "rx": []
+        },
+        {
+          "from": "Sam",
+          "at": "7:43 PM",
+          "t": "ok so the plan is we meet at the Riverside around 7:30, grab food at the food hall first, then walk over to the venue. Marcus might be late because he's coming straight from work but he said save him a spot. Also if you still have that portable speaker can you bring it? we're doing the thing by the river after 🙏",
+          "rx": [
+            "❤️"
+          ]
+        },
+        {
+          "from": "Sam",
+          "at": "7:44 PM",
+          "t": "https://www.instagram.com/reel/EXAMPLE123/",
+          "rx": [
+            "😂"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hermes",
+      "net": "Discord DM",
+      "unread": 1,
+      "msgs": [
+        {
+          "from": "Hermes",
+          "at": "7:02 AM",
+          "t": "Morning report is ready (8 cards). Open me with A to flip through it.",
+          "rx": []
+        },
+        {
+          "from": "Hermes",
+          "at": "7:30 PM",
+          "t": "Approval needed: deploy event-scraper v2 to the server. This restarts the scraper container (about 30 seconds of downtime). React ✅ to approve or ❌ to cancel.",
+          "rx": [
+            "✅",
+            "❌"
+          ],
+          "approval": true
+        }
+      ]
+    },
+    {
+      "name": "Family",
+      "net": "WhatsApp",
+      "unread": 0,
+      "msgs": [
+        {
+          "from": "Mom",
+          "at": "Sun",
+          "t": "Dinner Sunday at 6? Dad wants to grill if the weather holds 😍",
+          "rx": [
+            "👍"
+          ]
+        },
+        {
+          "from": "Dad",
+          "at": "Sun",
+          "t": "Look at this https://example.com/recipes/backyard-barbecue",
+          "rx": []
+        },
+        {
+          "from": "Mom",
+          "at": "Sun",
+          "t": "😂😂😂",
+          "rx": []
+        }
+      ]
+    },
+    {
+      "name": "Alex",
+      "net": "Signal",
+      "unread": 0,
+      "msgs": [
+        {
+          "from": "Alex",
+          "at": "Tue",
+          "t": "lol you have to watch this https://youtu.be/dQw4w9WgXcQ",
+          "rx": [
+            "💀"
+          ]
+        }
+      ]
+    }
+  ],
+  "T3": {
+    "projects": [
+      "rayneo-glasses",
+      "assistant-agent",
+      "api-server",
+      "website",
+      "scraper"
+    ],
+    "threads": [
+      {
+        "id": 1,
+        "title": "Beeper bridge auth mode",
+        "proj": "rayneo-glasses",
+        "st": "input",
+        "age": "12m",
+        "prov": "Claude Code",
+        "req": {
+          "type": "choice",
+          "q": "Which auth mode should the Beeper bridge use on Android?",
+          "opts": [
+            "Device token in Android Keystore (recommended)",
+            "Session cookie copied from Beeper Desktop",
+            "Stub it for now, decide later"
+          ],
+          "other": true
+        }
+      },
+      {
+        "id": 2,
+        "title": "Deploy event-scraper v2",
+        "proj": "scraper",
+        "st": "approval",
+        "age": "3m",
+        "prov": "Codex",
+        "req": {
+          "type": "approval",
+          "kind": "Run command",
+          "cmd": "docker compose -f prod.yml up -d --build scraper",
+          "why": "Rebuilds and restarts the scraper container on server-01. About 30 s of downtime.",
+          "opts": [
+            "Approve once",
+            "Approve for this thread",
+            "Deny"
+          ]
+        }
+      },
+      {
+        "id": 3,
+        "title": "Font test sheets",
+        "proj": "rayneo-glasses",
+        "st": "input",
+        "age": "40m",
+        "prov": "Claude Code",
+        "req": {
+          "type": "multi",
+          "q": "Which fonts should I render test sheets for? Pick any.",
+          "opts": [
+            "VT323",
+            "Pixelify Sans",
+            "Spleen 8x16",
+            "Terminus",
+            "Cozette"
+          ],
+          "other": true,
+          "sel": [
+            0,
+            2
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "title": "Price parser retries",
+        "proj": "api-server",
+        "st": "limited",
+        "age": "1h",
+        "prov": "Claude Code",
+        "last": "Stopped: Claude Code session limit reached. It resets in 2h 14m, or you can use a banked reset."
+      },
+      {
+        "id": 5,
+        "title": "Root page copy pass",
+        "proj": "website",
+        "st": "done",
+        "age": "25m",
+        "prov": "Claude Code",
+        "final": "Updated the root page copy for warm traffic.\n\nWhat changed:\n- Hero now leads with outcomes instead of the services list.\n- Cut the apartment-ops section from the root page and moved it to /real-estate.\n- Rewrote the three case-study cards to about 40 words each.\n- Added a single CTA (book a call) and removed the secondary newsletter CTA.\n\nPreview: deployed to the preview URL, Lighthouse 98/100/100/100.\n\nNot done: the testimonials section still has placeholder quotes. I need real ones before this ships."
+      },
+      {
+        "id": 6,
+        "title": "Morning report card JSON",
+        "proj": "assistant-agent",
+        "st": "done",
+        "age": "2h",
+        "prov": "Codex",
+        "final": "The assistant now emits the morning report as a JSON array of typed cards (weather, calendar, t3, news, events, health, todo). Schema is in docs/report-cards.md, with tests for each card type."
+      },
+      {
+        "id": 7,
+        "title": "Migrate handlers to v2 router",
+        "proj": "api-server",
+        "st": "working",
+        "age": "48m",
+        "prov": "Codex",
+        "now": {
+          "kind": "Running command",
+          "what": "pnpm test --filter api -- --runInBand",
+          "secs": 727
+        },
+        "steps": [
+          [
+            "Edited 6 files",
+            "0:42"
+          ],
+          [
+            "Ran tsc --noEmit",
+            "1:10"
+          ],
+          [
+            "Read src/routes/*.ts (22 files)",
+            "0:18"
+          ],
+          [
+            "Searched \"createRouter\"",
+            "0:03"
+          ]
+        ],
+        "msg": "14 of 22 handlers migrated. Running the API test suite before moving on to auth routes."
+      },
+      {
+        "id": 8,
+        "title": "OpenRayneo Kotlin port",
+        "proj": "rayneo-glasses",
+        "st": "working",
+        "age": "2h",
+        "prov": "Claude Code",
+        "now": {
+          "kind": "Running command",
+          "what": "./gradlew assembleDebug",
+          "secs": 7380,
+          "quiet": 6000
+        },
+        "steps": [
+          [
+            "Wrote GlassesLink.kt",
+            "3:20"
+          ],
+          [
+            "Ported RFCOMM auth",
+            "6:41"
+          ],
+          [
+            "Edited build.gradle.kts",
+            "0:12"
+          ]
+        ],
+        "msg": "Building the debug APK to test the ported RFCOMM link."
+      },
+      {
+        "id": 9,
+        "title": "Glasses simulator v2",
+        "proj": "rayneo-glasses",
+        "st": "working",
+        "age": "6m",
+        "prov": "Claude Code",
+        "now": {
+          "kind": "Thinking",
+          "what": "Planning list and pager renderers",
+          "secs": 41
+        },
+        "steps": [
+          [
+            "Read hud/hud.js",
+            "0:04"
+          ],
+          [
+            "Read docs/avatar-packs.md",
+            "0:02"
+          ]
+        ],
+        "msg": "Reading the HUD renderer before building shared components."
+      }
+    ],
+    "settled": [
+      {
+        "title": "Fix flaky e2e login test",
+        "proj": "rayneo-glasses",
+        "age": "1h"
+      },
+      {
+        "title": "Bump deps (Nov)",
+        "proj": "assistant-agent",
+        "age": "2h"
+      },
+      {
+        "title": "Add memo upload script",
+        "proj": "api-server",
+        "age": "3h"
+      },
+      {
+        "title": "GBrain ingest dry run",
+        "proj": "website",
+        "age": "1d"
+      },
+      {
+        "title": "Refactor notification router",
+        "proj": "scraper",
+        "age": "2d"
+      },
+      {
+        "title": "Spotify device picker spike",
+        "proj": "rayneo-glasses",
+        "age": "3d"
+      },
+      {
+        "title": "Audiobookshelf API client",
+        "proj": "assistant-agent",
+        "age": "4d"
+      },
+      {
+        "title": "Home Assistant scene map",
+        "proj": "api-server",
+        "age": "5d"
+      },
+      {
+        "title": "Calendar ICS parser",
+        "proj": "website",
+        "age": "6d"
+      },
+      {
+        "title": "Teleprompter scroll math",
+        "proj": "scraper",
+        "age": "7d"
+      },
+      {
+        "title": "Beeper reaction palette",
+        "proj": "rayneo-glasses",
+        "age": "8d"
+      },
+      {
+        "title": "Usage window pace math",
+        "proj": "assistant-agent",
+        "age": "9d"
+      },
+      {
+        "title": "Calendar OAuth spike",
+        "proj": "api-server",
+        "age": "3w"
+      },
+      {
+        "title": "Oura sync job",
+        "proj": "website",
+        "age": "3w"
+      },
+      {
+        "title": "Health API wrapper",
+        "proj": "scraper",
+        "age": "3w"
+      },
+      {
+        "title": "T3 thread list query",
+        "proj": "rayneo-glasses",
+        "age": "3w"
+      },
+      {
+        "title": "Morning report v1",
+        "proj": "assistant-agent",
+        "age": "4w"
+      },
+      {
+        "title": "Avatar pack converter",
+        "proj": "api-server",
+        "age": "4w"
+      },
+      {
+        "title": "Font rasterizer test",
+        "proj": "website",
+        "age": "4w"
+      },
+      {
+        "title": "Notification routing rules v0",
+        "proj": "scraper",
+        "age": "4w"
+      },
+      {
+        "title": "Link summarizer",
+        "proj": "rayneo-glasses",
+        "age": "5w"
+      },
+      {
+        "title": "Speaker enrollment notes",
+        "proj": "assistant-agent",
+        "age": "5w"
+      },
+      {
+        "title": "Location CSV writer",
+        "proj": "api-server",
+        "age": "5w"
+      },
+      {
+        "title": "Opus file writer",
+        "proj": "website",
+        "age": "5w"
+      },
+      {
+        "title": "Voice memo splitter",
+        "proj": "scraper",
+        "age": "6w"
+      }
+    ],
+    "usage": [
+      {
+        "prov": "Claude Code",
+        "wins": [
+          {
+            "label": "Session (5-hour)",
+            "pct": 41,
+            "reset": "2h 14m",
+            "tick": 0.55,
+            "pace": "under"
+          },
+          {
+            "label": "Weekly",
+            "pct": 63,
+            "reset": "Sat 9:00 AM",
+            "tick": 0.48,
+            "pace": "ahead"
+          },
+          {
+            "label": "Weekly · Fable",
+            "pct": 12,
+            "reset": "Sat 9:00 AM",
+            "tick": 0.48,
+            "pace": "under"
+          }
+        ],
+        "credits": [
+          {
+            "label": "Weekly reset",
+            "n": 1,
+            "desc": "Refills the weekly window"
+          },
+          {
+            "label": "Fable reset",
+            "n": 1,
+            "desc": "Refills Fable only"
+          }
+        ]
+      },
+      {
+        "prov": "Codex",
+        "wins": [
+          {
+            "label": "5-hour",
+            "pct": 8,
+            "reset": "4h 40m",
+            "tick": 0.07,
+            "pace": "on"
+          },
+          {
+            "label": "Weekly",
+            "pct": 71,
+            "reset": "Mon 6:00 AM",
+            "tick": 0.6,
+            "pace": "ahead"
+          }
+        ],
+        "credits": []
+      },
+      {
+        "prov": "Cursor",
+        "wins": [
+          {
+            "label": "Monthly",
+            "pct": 22,
+            "reset": "Dec 1",
+            "tick": 0.36,
+            "pace": "under"
+          }
+        ],
+        "credits": []
+      }
+    ],
+    "envs": [
+      {
+        "n": "workstation",
+        "on": true,
+        "seen": "now",
+        "os": "Windows"
+      },
+      {
+        "n": "server-01",
+        "on": true,
+        "seen": "now",
+        "os": "Linux"
+      },
+      {
+        "n": "laptop",
+        "on": false,
+        "seen": "3h ago",
+        "os": "macOS"
+      }
+    ]
+  },
+  "M": {
+    "artist": "",
+    "src": "abs",
+    "playing": true,
+    "title": "Project Hail Mary",
+    "sub": "Andy Weir · Chapter 14",
+    "pos": 0.34,
+    "len": "16h 10m",
+    "el": "5h 30m",
+    "speed": 1.5,
+    "vol": 6,
+    "dev": "Living room TV"
+  },
+  "ABS": [
+    {
+      "t": "Project Hail Mary",
+      "a": "Andy Weir",
+      "p": 0.34,
+      "ch": "Chapter 14"
+    },
+    {
+      "t": "Dungeon Crawler Carl 5",
+      "a": "Matt Dinniman",
+      "p": 0.12,
+      "ch": "Chapter 6"
+    },
+    {
+      "t": "Cibola Burn",
+      "a": "James S. A. Corey",
+      "p": 0.71,
+      "ch": "Chapter 38"
+    }
+  ],
+  "SPOT_RECENT": [
+    "Deep Work",
+    "Weekend Session",
+    "Road Trip",
+    "Late Night Lo-fi"
+  ],
+  "YT": {
+    "Picks": [
+      "Synth history in 12 minutes",
+      "A better way to take notes",
+      "How T3 Code works",
+      "Tiny habits, big change",
+      "The best backyard barbecue",
+      "Waveguides vs birdbaths",
+      "Why tides are weird",
+      "I built a tiny CNC in a week",
+      "How waveguide displays work",
+      "City park walking tour",
+      "Ramen at home, properly",
+      "The weird history of the QWERTY layout",
+      "Bone conduction explained",
+      "Why every airport sounds the same",
+      "Making a mechanical keyboard from scratch",
+      "Inside a microLED fab",
+      "Longboard dancing basics",
+      "Arch Linux in 2026",
+      "How Opus beats MP3",
+      "The economics of IKEA",
+      "Rollerblade slalom tutorial",
+      "3D printing PETG tips",
+      "Build a Home Assistant dashboard",
+      "What is a waveguide anyway",
+      "Espresso at 1 bar"
+    ]
+  },
+  "DEVICES": [
+    "This phone",
+    "Living room TV",
+    "Desktop",
+    "Laptop",
+    "Bedroom speaker"
+  ],
+  "PEOPLE": [
+    {
+      "n": "Sam Rivera",
+      "seen": "2 min ago",
+      "where": "Riverside food hall",
+      "recent": true,
+      "notes": "Friend from the climbing crew.\n\n- Kid has a soccer game Saturday at 10 AM. Ask how it went.\n- Moving across town in January; looking at places near the park.\n- Lent you a longboard wheel set. Return it.\n- Training for a half marathon in February.\n- Prefers texts over calls."
+    },
+    {
+      "n": "Dana Kim",
+      "seen": "7 min ago",
+      "where": "Corner Coffee",
+      "recent": true,
+      "notes": "Barista at Corner Coffee. Met 3 times.\n\n- Into sci-fi audiobooks. Recommended Cibola Burn.\n- Studying UX design at night."
+    },
+    {
+      "n": "Marcus Lee",
+      "seen": "Yesterday",
+      "where": "Downtown",
+      "recent": false,
+      "notes": "Works late shifts at the hospital.\n\n- Coming to the Riverside tonight; told Sam to save him a spot."
+    },
+    {
+      "n": "Priya Shah",
+      "seen": "3 days ago",
+      "where": "Climbing gym",
+      "recent": false,
+      "notes": "Climbing partner on Thursdays.\n\n- Working on a V6 project.\n- Owes you a belay."
+    }
+  ],
+  "DOCS": [
+    {
+      "t": "Tuesday sync notes",
+      "d": "Decisions\n- Ship the glasses simulator this week; real Bluetooth link next week.\n- The assistant stays the single entry point for personal tasks.\n- Notifications never interrupt; The classifier only decides notify or suppress.\n\nOwners\n- Robin: control map, page layouts.\n- Hermes: morning report cards as JSON.\n\nOpen questions\n- Memo upload path: share intent vs manual.\n- Classifier API shape and override rules.\n- Which font reads best at 540 by 220.\n\nNext sync Thursday 4 PM."
+    },
+    {
+      "t": "Waveguide displays explainer",
+      "d": "A diffractive waveguide carries light from a tiny projector at the temple, through the lens, and out toward your eye. Gratings etched into the glass bend the light in and then out again.\n\nBecause the light is spread across a small eye box, brightness drops quickly as the field of view grows. That is why small heads-up displays like the iO can hit over 1,000 nits while wide AR displays struggle outdoors.\n\nMonochrome green is common for a reason: green microLEDs are the most efficient, and the eye is most sensitive to green, so the same power looks brighter.\n\nThe trade-off is that colour, fine detail and large text areas all cost brightness or battery. Designing for these displays means short text, high contrast, and big clear shapes."
+    },
+    {
+      "t": "Q4 usage report",
+      "d": "Total agent hours this quarter rose 38% over Q3. Claude Code accounts for most long-running threads; Codex handles most quick fixes.\n\nPeak usage lands on Monday and Tuesday mornings. Weekly limits were hit twice, both in the last week of October."
+    }
+  ],
+  "SCRIPT": "Thanks for coming out tonight. Quick intro: I make small tools that help people get through their day. Tonight I want to show three things we shipped this year, what worked, and what we would do differently. First up is a food-cost monitor for a restaurant group.",
+  "CAL": [
+    {
+      "day": "TODAY",
+      "items": [
+        [
+          "8:00 PM",
+          "Team standup",
+          "Zoom"
+        ]
+      ]
+    },
+    {
+      "day": "TOMORROW",
+      "items": [
+        [
+          "9:30 AM",
+          "Dentist",
+          "Northside"
+        ],
+        [
+          "1:00 PM",
+          "Client call",
+          "Google Meet"
+        ],
+        [
+          "6:00 PM",
+          "Climbing",
+          "Summit Gym"
+        ]
+      ]
+    },
+    {
+      "day": "FRI NOV 13",
+      "items": [
+        [
+          "12:00 PM",
+          "Lunch with Priya",
+          "Maple Grill"
+        ]
+      ]
+    }
+  ],
+  "REPORT": [
+    {
+      "ic": "sun",
+      "h": "Weather",
+      "b": "72°F now, 58°F tonight. Rain after 4 PM, so bring a jacket if you head out."
+    },
+    {
+      "ic": "calendar",
+      "h": "Today",
+      "b": "8:00 PM team standup on Zoom. Nothing after that. Tomorrow starts at 9:30 AM with the dentist."
+    },
+    {
+      "ic": "t3",
+      "h": "T3 Code",
+      "b": "2 threads need you: Beeper bridge auth (input) and the scraper deploy (approval). 2 finished overnight."
+    },
+    {
+      "ic": "news",
+      "h": "AI news",
+      "b": "A new open-weights coding model tops the benchmarks this week, at about a third of the price of the leaders."
+    },
+    {
+      "ic": "news",
+      "h": "Local",
+      "b": "The Riverside farmers market moves to Sunday mornings through December."
+    },
+    {
+      "ic": "party",
+      "h": "Events",
+      "b": "Saturday: night market downtown, 6 to 11 PM. Three friends are going."
+    },
+    {
+      "ic": "health",
+      "h": "Health",
+      "b": "Readiness 78. Sleep 7h 12m (84). Weight trend is down 0.6 lb a week."
+    },
+    {
+      "ic": "todo",
+      "h": "To-do",
+      "b": "Renew the domain (due in 2 days). Reply to Sam about tonight."
+    }
+  ],
+  "JOY_SAMPLES": [
+    "Put on something interesting from Picks",
+    "What should I bring tonight, and when do I need to leave?",
+    "Summarize where the Beeper bridge thread is at"
+  ],
+  "JOY_ANS": [
+    "Playing \"How waveguide displays work\" from Picks. It runs 14 minutes. Say next if you want a different one.",
+    "Sam asked you to bring the portable speaker, and the plan is to meet at the Riverside at 7:30 for food first. It's 20 minutes to the Riverside by car with current traffic, so leave by 7:05. It will also be 58 degrees and possibly raining after 4, so grab a jacket. Marcus is coming late from work and asked Sam to save him a spot. After the food hall you're all walking to the venue, then heading down to the river. Standup is at 8, which overlaps. Do you want me to move standup to tomorrow morning, or tell the team you'll join from your phone? I can also send Sam a quick yes with an ETA if you'd like. One more thing: the event-scraper deploy is still waiting on your approval, and it restarts the container for about 30 seconds. If you approve it before you leave, it should finish before you're out the door.",
+    "Beeper bridge: the reactions endpoint is wired and the tests pass. It's waiting on you to pick an auth mode. The recommended option is a device token stored in the Android Keystore."
+  ],
+  "SAMPLE_MSG": [
+    "Yes! I'll be there around 7:30 and I'll bring the speaker. Save me a seat if you get there first.",
+    "On my way, about 10 minutes out.",
+    "Sounds good. I have standup at 8 so I might step away for 15 minutes, but I'll be there for the river after. Want me to grab anything on the way?"
+  ],
+  "SPOT_TRACK": {
+    "Discover Weekly": [
+      "Midnight City",
+      "M83"
+    ],
+    "Liked Songs": [
+      "Let It Happen",
+      "Tame Impala"
+    ],
+    "Deep Work": [
+      "Says",
+      "Nils Frahm"
+    ],
+    "Weekend Session": [
+      "Glowed Up",
+      "Kaytranada"
+    ],
+    "Road Trip": [
+      "Dreams",
+      "Fleetwood Mac"
+    ],
+    "Late Night Lo-fi": [
+      "Affection",
+      "Jinsang"
+    ]
+  },
+  "CHANNELS": [
+    "Veritasium",
+    "Stuff Made Here",
+    "Branch Education",
+    "Weekend Outdoors",
+    "Joshua Weissman",
+    "Tom Scott",
+    "Technology Connections",
+    "Half as Interesting",
+    "Ben Eater",
+    "Asianometry",
+    "Adam Colton",
+    "DistroTube",
+    "Nick Chapsas",
+    "Wendover",
+    "Rollerblade Skool",
+    "CNC Kitchen",
+    "Everything Smart Home",
+    "Applied Science",
+    "James Hoffmann",
+    "Summoning Salt",
+    "Linus Tech Tips",
+    "Marques Brownlee",
+    "3Blue1Brown",
+    "Real Engineering",
+    "Ethan Chlebowski"
+  ],
+  "YT_LISTS": {
+    "Picks": [
+      "Synth history in 12 minutes",
+      "A better way to take notes",
+      "How T3 Code works",
+      "Tiny habits, big change",
+      "The best backyard barbecue",
+      "Waveguides vs birdbaths",
+      "Why tides are weird",
+      "I built a tiny CNC in a week",
+      "How waveguide displays work",
+      "City park walking tour",
+      "Ramen at home, properly",
+      "The weird history of the QWERTY layout",
+      "Bone conduction explained",
+      "Why every airport sounds the same",
+      "Making a mechanical keyboard from scratch",
+      "Inside a microLED fab",
+      "Longboard dancing basics",
+      "Arch Linux in 2026",
+      "How Opus beats MP3",
+      "The economics of IKEA",
+      "Rollerblade slalom tutorial",
+      "3D printing PETG tips",
+      "Build a Home Assistant dashboard",
+      "What is a waveguide anyway",
+      "Espresso at 1 bar"
+    ]
+  },
+  "HEALTH": [
+    {
+      "k": "weight",
+      "ic": "status",
+      "name": "Weight",
+      "val": "165.4 lb",
+      "when": "6:41 AM today",
+      "data": [
+        166.9,
+        166.7,
+        167.8,
+        166.8,
+        167.2,
+        166.5,
+        167.6,
+        166.7,
+        166.5,
+        166.6,
+        167.3,
+        166.9,
+        166.3,
+        166.6,
+        166.7,
+        165.5,
+        166.9,
+        166.6,
+        166.7,
+        165.5,
+        165.6,
+        165.7,
+        166.4,
+        183,
+        166.2,
+        165.5,
+        165.3,
+        165.9,
+        164.9,
+        165.8
+      ],
+      "bd": [
+        [
+          "7-day avg",
+          "165.9 lb"
+        ],
+        [
+          "30-day change",
+          "−1.8 lb"
+        ],
+        [
+          "Body fat",
+          "18.2%"
+        ],
+        [
+          "Muscle mass",
+          "142.1 lb"
+        ],
+        [
+          "Source",
+          "Smart scale"
+        ]
+      ]
+    },
+    {
+      "k": "ready",
+      "ic": "health",
+      "name": "Readiness",
+      "val": "78",
+      "when": "Oura · this morning",
+      "data": [
+        74.4,
+        83,
+        76.4,
+        81.7,
+        76.9,
+        73.8,
+        67.4,
+        69.8,
+        84.7,
+        75,
+        69.1,
+        80.5,
+        76.2,
+        82.4,
+        68.8,
+        78.3,
+        81.1,
+        75,
+        70.8,
+        72.8,
+        70.7,
+        79.3,
+        83,
+        81.3,
+        75.3,
+        83.1,
+        78.5,
+        84.2,
+        80.7,
+        69.5
+      ],
+      "bd": [
+        [
+          "Resting heart rate",
+          86
+        ],
+        [
+          "HRV balance",
+          64
+        ],
+        [
+          "Body temperature",
+          92
+        ],
+        [
+          "Recovery index",
+          80
+        ],
+        [
+          "Sleep",
+          78
+        ],
+        [
+          "Previous day activity",
+          88
+        ],
+        [
+          "Activity balance",
+          55
+        ],
+        [
+          "Sleep balance",
+          74
+        ]
+      ]
+    },
+    {
+      "k": "sleep",
+      "ic": "moon",
+      "name": "Sleep",
+      "val": "84 · 7h 12m",
+      "when": "last night",
+      "data": [
+        79.8,
+        81,
+        73.8,
+        75.9,
+        79.1,
+        80.1,
+        73.3,
+        86.1,
+        81.4,
+        78.6,
+        76.6,
+        84.5,
+        82.5,
+        73.2,
+        80,
+        75.8,
+        82.8,
+        74.5,
+        81,
+        79.8,
+        74.8,
+        72.8,
+        87,
+        87.5,
+        73.9,
+        79.1,
+        87.3,
+        75,
+        78.7,
+        80.8
+      ],
+      "bd": [
+        [
+          "Total sleep",
+          "7h 12m",
+          80
+        ],
+        [
+          "Efficiency",
+          "91%",
+          90
+        ],
+        [
+          "Restfulness",
+          "",
+          72
+        ],
+        [
+          "REM",
+          "1h 38m",
+          84
+        ],
+        [
+          "Deep",
+          "1h 10m",
+          88
+        ],
+        [
+          "Latency",
+          "12 min",
+          82
+        ],
+        [
+          "Timing",
+          "",
+          70
+        ]
+      ]
+    },
+    {
+      "k": "hrv",
+      "ic": "ring",
+      "name": "HRV",
+      "val": "52 ms",
+      "when": "night average",
+      "data": [
+        51.1,
+        54.7,
+        46.2,
+        43.5,
+        45.2,
+        52.6,
+        44.7,
+        46.6,
+        53.2,
+        46.7,
+        50.7,
+        53.8,
+        55.3,
+        49.3,
+        46.2,
+        48.3,
+        48.2,
+        50.2,
+        45.6,
+        53.4,
+        43.6,
+        52.9,
+        42.5,
+        46.4,
+        48.2,
+        49.6,
+        50.3,
+        51.2,
+        52.3,
+        47.2
+      ],
+      "bd": [
+        [
+          "Night average",
+          "52 ms"
+        ],
+        [
+          "Max",
+          "88 ms"
+        ],
+        [
+          "30-day average",
+          "49 ms"
+        ],
+        [
+          "Balance",
+          "Fair"
+        ]
+      ]
+    },
+    {
+      "k": "rhr",
+      "ic": "health",
+      "name": "Resting HR",
+      "val": "54 bpm",
+      "when": "lowest 51",
+      "data": [
+        56.1,
+        55.4,
+        56.9,
+        55.2,
+        53.1,
+        56.9,
+        53.8,
+        52.8,
+        54.5,
+        54,
+        56.4,
+        56.9,
+        53,
+        56.2,
+        56,
+        52.8,
+        54.2,
+        54,
+        55.5,
+        57.4,
+        52.9,
+        53.2,
+        52.9,
+        54.9,
+        53,
+        52.9,
+        57.1,
+        56.9,
+        54.5,
+        56.4
+      ],
+      "bd": [
+        [
+          "Lowest",
+          "51 bpm"
+        ],
+        [
+          "Night average",
+          "54 bpm"
+        ],
+        [
+          "30-day average",
+          "55 bpm"
+        ]
+      ]
+    }
+  ],
+  "MEMO_TITLES": [
+    "Glasses home screen ideas",
+    "Reminder to call the landlord",
+    "Notes from the park",
+    "Morning report personality ideas"
+  ]
+}

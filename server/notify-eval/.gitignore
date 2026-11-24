@@ -1,0 +1,3 @@
+# Real messages, names, call metadata, runs and the built site never go into git.
+private/
+dist/

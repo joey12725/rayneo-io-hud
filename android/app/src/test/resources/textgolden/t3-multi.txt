@@ -1,0 +1,7 @@
+T3 multi-select       Q1/1
+Which fonts should I      
+render test sheets for?   
+>[x] VT323                
+ [ ] Pixelify Sans        
+ [x] Spleen 8x16         v
+Y toggle v submit      1/2

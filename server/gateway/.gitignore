@@ -1,0 +1,5 @@
+.data/
+.env
+gateway.config.json
+secrets.json
+config/

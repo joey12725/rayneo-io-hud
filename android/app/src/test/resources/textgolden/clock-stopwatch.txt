@@ -1,0 +1,7 @@
+Stopwatch             STOP
+0:12.3                    
+Lap 2               0:03.9
+Lap 1               0:04.2
+                          
+                          
+Y start X reset           

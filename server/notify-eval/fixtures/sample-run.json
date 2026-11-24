@@ -1,0 +1,280 @@
+{
+ "schema": 1,
+ "runId": "2026-11-17T00-00-00Z-sample",
+ "label": "sample",
+ "endpoint": "route",
+ "target": "sample",
+ "model": null,
+ "gitCommit": null,
+ "repeats": 2,
+ "popupAt": 0.75,
+ "startedAt": "2026-11-17T00:00:00.000Z",
+ "finishedAt": "2026-11-17T00:01:00.000Z",
+ "cases": 13,
+ "results": [
+  {
+   "id": "beeper:sample-dm-plan",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 800,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 811,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "beeper:sample-dm-chat",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 837,
+     "route": "stream",
+     "importance": 0.6,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 848,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "beeper:sample-group-lol",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 874,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 885,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "beeper:sample-group-owner",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 911,
+     "route": "stream",
+     "importance": 0.6,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 922,
+     "route": "stream",
+     "importance": 0.6,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "beeper:sample-reel",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 948,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 959,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "beeper:sample-otp",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 985,
+     "route": "stream",
+     "importance": 0.6,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 996,
+     "route": "stream",
+     "importance": 0.6,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "t3:sample-needs-input",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1022,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 1033,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "t3:sample-quick",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1059,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 1070,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "t3:sample-long",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1096,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    },
+    {
+     "status": 200,
+     "ms": 1107,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "model"
+    }
+   ]
+  },
+  {
+   "id": "call:syn-spam-failed",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1133,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "rule"
+    },
+    {
+     "status": 0,
+     "ms": null,
+     "error": "The operation was aborted due to timeout"
+    }
+   ]
+  },
+  {
+   "id": "call:syn-spam-none",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1170,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "rule"
+    },
+    {
+     "status": 0,
+     "ms": null,
+     "error": "The operation was aborted due to timeout"
+    }
+   ]
+  },
+  {
+   "id": "call:syn-unknown-passed",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1207,
+     "route": "suppress",
+     "importance": 0.1,
+     "reason": "sample reason",
+     "by": "rule"
+    },
+    {
+     "status": 0,
+     "ms": null,
+     "error": "The operation was aborted due to timeout"
+    }
+   ]
+  },
+  {
+   "id": "call:sample-contact",
+   "attempts": [
+    {
+     "status": 200,
+     "ms": 1244,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "rule"
+    },
+    {
+     "status": 200,
+     "ms": 1255,
+     "route": "popup",
+     "importance": 0.9,
+     "reason": "sample reason",
+     "by": "rule"
+    }
+   ]
+  }
+ ]
+}
